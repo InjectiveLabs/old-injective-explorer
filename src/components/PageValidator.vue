@@ -49,10 +49,10 @@ export default {
     ToolBar
   },
   computed: {
-    ...mapGetters(['validators']),
+    ...mapGetters(['peers']),
     validator () {
-      if (this.validators && this.validators.length > 0) {
-        return this.validators.find(
+      if (this.peers && this.peers.length > 0) {
+        return this.peers.find(
           v =>
             this.urlsafeIp(v.node_info.listen_addr) ===
             this.$route.params.validator + ':46656'

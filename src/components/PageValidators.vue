@@ -31,11 +31,11 @@ export default {
     ToolBar
   },
   computed: {
-    ...mapGetters(['validators']),
+    ...mapGetters(['peers']),
     values () {
-      return orderBy(this.validators, ['node_info.moniker', 'desc'])
+      return orderBy(this.peers, ['node_info.moniker', 'desc'])
     },
-    online () { return this.validators.length }
+    online () { return this.peers.length }
   },
   methods: {
     toggleFilter () {

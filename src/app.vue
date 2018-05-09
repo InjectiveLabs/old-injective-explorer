@@ -19,7 +19,9 @@ export default {
   },
   mounted () {
     requestInterval(1000, () => this.$store.commit('getStatus'))
-    requestInterval(1000, () => this.$store.commit('getValidators'))
+    requestInterval(1000, () => this.$store.commit('getNodes'))
+    this.$store.commit('getValidators')
+    requestInterval(10000, () => this.$store.commit('getValidators'))
   },
   store
 }
