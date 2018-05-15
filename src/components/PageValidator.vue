@@ -7,7 +7,7 @@ page(:title="`Node: ${getIp(validator)}`")
   part(title='ID')
     list-item(dt="Moniker" :dd="validator.node_info.moniker")
     list-item(dt="Listen Address" :dd="validator.node_info.listen_addr")
-    list-item(dt="Start Date" :dd="readableDate(validator.connection_status.SendMonitor.Start)")
+    list-item(dt="Start Date" :dd="validator.connection_status && readableDate(validator.connection_status.SendMonitor.Start)")
 
   part(title='Pub Key')
     list-item(dt="Value" :dd="validator.node_info.id")
@@ -25,10 +25,10 @@ page(:title="`Node: ${getIp(validator)}`")
     list-item(dt="Proposals" dd="13" to="/proposals")
     list-item(dt="Slashes" dd="6" to="/slashes")
 
-  // part(title='Staking')
-    list-item(dt="Delegators" dd="137" to="/delegators")
-    list-item(dt="Earn Rate" dd="8.1K ATOM / day")
-    list-item(dt="Total Earnings" dd="301.8K ATOM")
+  part(title='Staking')
+    list-item(dt="Delegators" :dd="validator.validator ? validator.validator.voting_power : 0 " to="/delegators")
+    //list-item(dt="Earn Rate" dd="8.1K ATOM / day'")
+    //list-item(dt="Total Earnings" dd="301.8K ATOM")
 </template>
 
 <script>
@@ -75,14 +75,14 @@ export default {
       return ip.split('.').join('-')
     },
     getIp (validator) {
-      return validator.node_info.listen_addr.split(':')[0]
+      return validator.node_info.listen_addr && validator.node_info.listen_addr.split(':')[0]
     },
     readableDate (ms) {
       return moment(ms).format('YYYY-MM-DD h:mm:ss A')
     }
   },
   mounted () {
-    setInterval(console.log(this.validator), 1000)
+    // setInterval(console.log(this.validator), 1000)
   }
 }
 </script>

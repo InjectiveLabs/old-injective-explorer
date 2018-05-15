@@ -14,45 +14,85 @@ const state = {
       moniker: null
     }
   },
-  peers: []
+  peers: [],
+  validators: []
+}
+function reflect (promise) {
+  return promise.then(
+    function (v) {
+      return { v: v, status: 'resolved' }
+    },
+    function (e) {
+      return { e: e, status: 'rejected' }
+    }
+  )
+}
+
+const actions = {
+  async getStatus ({ state, commit }) {
+    let json = await axios.get(`${state.url}/status`)
+    commit('setStatus', json.data.result)
+  },
+  async getNodes ({ state, commit }) {
+    let json = await axios.get(`${state.url}/net_info`)
+    commit('setPeers', json.data.result.peers)
+    return Promise.resolve()
+  },
+  getValidators ({ commit, state, dispatch }) {
+    let obj = state.peers
+      .map(p => p.node_info.listen_addr)
+      .reduce((o, key) => ({ ...o, [key]: false }), {})
+    commit('setValidators', obj)
+    let all = state.peers.map((peer, key) => {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(
+            `http://${peer.node_info.listen_addr.replace(46656, 46657)}/status`
+          )
+          .then(json => {
+            commit('setValidator', {
+              validator: json.data.result.validator_info,
+              key: peer.node_info.listen_addr
+            })
+            resolve()
+          })
+          .catch(reject)
+      })
+    })
+
+    return Promise.all(all.map(reflect))
+      .then(function (results) {
+        console.log('results', results)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 }
 
 const mutations = {
   setUrl (state, value) {
     state.url = value
   },
-  async getStatus (state) {
-    let json = await axios.get(`${state.url}/status`)
-    // console.log('blockchain', json.data)
-    state.status = json.data.result
+  setStatus (state, value) {
+    state.status = value
   },
-  async getNodes (state) {
-    let json = await axios.get(`${state.url}/net_info`)
-    // console.log('peers', json.data.result.peers)
-    state.peers = json.data.result.peers
+  setValidators (state, value) {
+    state.validators = value
   },
-  async getValidators (state) {
-    // let validators = await axios.get(`${state.url}/validators`)
-    // console.log('validators', validators.data.result.validators)
-    Promise.all(
-      state.peers.map(async p => {
-        console.log(p.node_info.listen_addr)
-        try {
-          p.status = await axios.get(`http://${p.node_info.listen_addr}/status`)
-        } catch (error) {
-          console.log(error)
-          console.log('not this one')
-        }
-        return p
-      })
-    ).then(peers => {
-      console.log('peers', peers)
-      state.peers = peers
-    })
+  setPeers (state, value) {
+    state.peers = value
+  },
+  setValidator (state, { validator, key }) {
+    // console.log(peer)
+    // console.log(state.peers)
+    state.validators[key] = validator
+    // state.peers.splice(key, 1, peer)
   }
 }
 
 export default {
   state,
+  actions,
   mutations
 }
