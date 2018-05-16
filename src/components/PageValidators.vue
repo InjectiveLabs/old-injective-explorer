@@ -33,7 +33,7 @@ export default {
   },
   data () {
     return {
-      asc: true
+      asc: false
     }
   },
   computed: {
@@ -41,7 +41,7 @@ export default {
     values () {
       // return orderBy(this.peers, 'node_info.moniker', this.asc ? 'asc' : 'desc')
       return orderBy(this.peers, (e) => {
-        return e.validator && e.validator.voting_power
+        return (e.validator && e.validator.voting_power) || 0
       }, this.asc ? 'asc' : 'desc')
     },
     online () { return this.peers.length }

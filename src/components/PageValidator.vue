@@ -17,18 +17,18 @@ page(:title="`Node: ${getIp(validator)}`")
     list-item(dt="Version" :dd="validator.node_info.version")
     list-item(dt="Channels" :dd="validator.node_info.channels")
 
-  // part(title='Profile')
-    list-item(dt="Total Vote Power" dd="4.2M ATOM" to="/vote-power")
+  part(title='Profile')
+    list-item(dt="Total Vote Power" :dd="validator.validator ? validator.validator.voting_power : 0 + ' ATOM'" to="/vote-power")
     list-item(dt="Solo Vote Power" dd="1M ATOM (19%)")
     list-item(dt="Delg. Vote Power" dd="3.2M ATOM (81%)")
     list-item(dt="Vote History" dd="37 Votes" to="/votes")
     list-item(dt="Proposals" dd="13" to="/proposals")
     list-item(dt="Slashes" dd="6" to="/slashes")
 
-  part(title='Staking')
-    list-item(dt="Delegators" :dd="validator.validator ? validator.validator.voting_power : 0 " to="/delegators")
-    //list-item(dt="Earn Rate" dd="8.1K ATOM / day'")
-    //list-item(dt="Total Earnings" dd="301.8K ATOM")
+  //part(title='Staking')
+    list-item(dt="Delegators" dd="" to="/delegators")
+    list-item(dt="Earn Rate" dd="8.1K ATOM / day'")
+    list-item(dt="Total Earnings" dd="301.8K ATOM")
 </template>
 
 <script>
