@@ -1,12 +1,17 @@
 import axios from 'axios'
 
 const state = {
-  url: 'http://206.189.22.179:46657',
+  url: 'http://138.68.77.24:46657',
   status: {
     listen_addr: '',
     sync_info: {
       latest_block_height: 0,
       latest_block_hash: ''
+    },
+    node_info: {
+      version: null,
+      network: null,
+      moniker: null
     }
   },
   validators: []
