@@ -84,10 +84,7 @@ const mutations = {
     state.peers = value
   },
   setValidator (state, { validator, key }) {
-    // console.log(peer)
-    // console.log(state.peers)
     state.validators[key] = validator
-    // state.peers.splice(key, 1, peer)
   }
 }
 
