@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const state = {
-  url: 'http://138.68.77.24:46657',
+  url: 'http://45.77.53.208:46657',
   status: {
     listen_addr: '',
     sync_info: {
