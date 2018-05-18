@@ -2,7 +2,7 @@
 menu.app-menu
   part(title='Network Monitor')
     list-item(to="/" exact @click.native="close" title="Blockchain")
-    list-item(to="/validators" exact @click.native="close" :title="`Peer Nodes (${validators.length})`" v-bind:class="{ 'active': isValidatorPage }")
+    list-item(to="/validators" exact @click.native="close" :title="`Peer Nodes (${peers.length})`" v-bind:class="{ 'active': isValidatorPage }")
     list-item(to="/search" exact @click.native="close" title="Search")
   part(title='Learn More')
     list-item(type="anchor" href="https://riot.im/app/#/room/#cosmos_validators:matrix.org" @click.native="close" title="Validator Chat" target="_blank")
@@ -21,7 +21,7 @@ export default {
     Part
   },
   computed: {
-    ...mapGetters(['proposals', 'validators']),
+    ...mapGetters(['proposals', 'peers']),
     proposalAlerts () {
       return this.proposals
         .filter(p => p.flags.read === false).length

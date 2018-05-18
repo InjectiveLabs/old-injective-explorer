@@ -3,7 +3,7 @@ page(title='Blockchain')
   part(title='Blockchain')
     list-item(dt='Network' :dd='bc.status.node_info.network')
     list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
-    list-item(dt='Peer Nodes' :dd='validators.length')
+    list-item(dt='Peer Nodes' :dd='peers.length')
 
   part(title='Current Block')
     list-item(dt='Block Height' :dd='num.prettyInt(bc.status.sync_info.latest_block_height)'
@@ -32,7 +32,7 @@ export default {
     Part
   },
   computed: {
-    ...mapGetters(['bc', 'config', 'validators'])
+    ...mapGetters(['bc', 'config', 'peers'])
   },
   data: () => ({
     moment: moment,

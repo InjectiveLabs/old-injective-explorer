@@ -18,8 +18,13 @@ export default {
     AppFooter
   },
   mounted () {
-    requestInterval(1000, () => this.$store.commit('getStatus'))
-    requestInterval(1000, () => this.$store.commit('getValidators'))
+    requestInterval(1000, () => this.$store.dispatch('getStatus'))
+    requestInterval(1000, () => this.$store.dispatch('getNodes'))
+    this.$store.dispatch('getStatus')
+    this.$store.dispatch('getNodes').then(() => {
+      this.$store.dispatch('getValidators')
+    })
+    requestInterval(30 * 60 * 1000, () => this.$store.dispatch('getValidators'))
   },
   store
 }
