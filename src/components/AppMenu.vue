@@ -1,6 +1,6 @@
 <template lang="pug">
 menu.app-menu
-  part(title='Network Monitor')
+  part(title='Network Explorer')
     list-item(to="/" exact @click.native="close" title="Blockchain")
     list-item(to="/validators" exact @click.native="close" :title="`Peer Nodes (${peers.length})`" v-bind:class="{ 'active': isValidatorPage }")
     list-item(to="/search" exact @click.native="close" title="Search")
