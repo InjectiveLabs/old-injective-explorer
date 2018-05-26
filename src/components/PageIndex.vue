@@ -12,7 +12,7 @@ page(title='Blockchain')
     list-item(dt='Latest Block Hash' :dd='bc.status.sync_info.latest_block_hash')
 
   part(title='Connected Node')
-    list-item(dt='Node IP')
+    list-item(dt='Node Address')
       div(slot="dd"): input#node-input(v-model="bc.url")
     list-item(dt='Node Moniker' :dd='bc.status.node_info.moniker')
 </template>
