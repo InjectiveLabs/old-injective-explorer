@@ -8,7 +8,7 @@ page(title='Blockchain')
   part(title='Current Block')
     list-item(dt='Block Height' :dd='num.prettyInt(bc.status.sync_info.latest_block_height)'
       :to="{ name: 'block', params: { block: bc.status.sync_info.latest_block_height} }")
-    list-item(dt='Latest Block Time' :dd='readableDate(bc.status.latest_block_time)')
+    list-item(dt='Latest Block Time' :dd='readableDate(bc.status.sync_info.latest_block_time)')
     list-item(dt='Latest Block Hash' :dd='bc.status.sync_info.latest_block_hash')
 
   part(title='Connected Node')
