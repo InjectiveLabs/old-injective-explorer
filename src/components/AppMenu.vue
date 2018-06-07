@@ -5,8 +5,9 @@ menu.app-menu
     list-item(to="/validators" exact @click.native="close" :title="`Peer Nodes (${peers.length})`" v-bind:class="{ 'active': isValidatorPage }")
     list-item(to="/search" exact @click.native="close" title="Search")
   part(title='Learn More')
-    list-item(type="anchor" href="https://riot.im/app/#/room/#cosmos_validators:matrix.org" @click.native="close" title="Validator Chat" target="_blank")
-    list-item(type="anchor" href="https://cosmos.network" @click.native="close" title="Cosmos Website" target="_blank")
+    list-item(type="anchor" href="https://riot.im/app/#/room/#cosmos_validators:matrix.org" @click.native="close" title="#cosmos_validators" subtitle="validator chat" target="_blank")
+    list-item(type="anchor" href="http://validators.resilient.zone/gaia-5/" @click.native="close" title="resilient.zone" subtitle="validator statistics" target="_blank")
+    list-item(type="anchor" href="https://cosmos.network" @click.native="close" title="cosmos.network" subtitle="official website" target="_blank")
 </template>
 
 <script>
