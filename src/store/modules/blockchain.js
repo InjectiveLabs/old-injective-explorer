@@ -38,11 +38,13 @@ const actions = {
     commit('setPeers', json.data.result.peers)
     return Promise.resolve()
   },
+  // eslint-disable-next-line
   getValidators ({ commit, state, dispatch }) {
     let obj = state.peers
       .map(p => p.node_info.listen_addr)
       .reduce((o, key) => ({ ...o, [key]: false }), {})
     commit('setValidators', obj)
+    // eslint-disable-next-line
     let all = state.peers.map((peer, key) => {
       return new Promise((resolve, reject) => {
         axios
