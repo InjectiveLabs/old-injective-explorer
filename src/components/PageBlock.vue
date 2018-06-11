@@ -172,6 +172,7 @@ export default {
     await this.fetchBlock()
   },
   watch: {
+    // eslint-disable-next-line
     '$route' (to, from) {
       this.fetchBlock()
     }

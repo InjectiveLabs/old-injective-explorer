@@ -1,5 +1,5 @@
 <template>
-  <form :class="cssClass" v-on:submit.prevent.default="submit">
+  <form :class="cssClass" v-on:submit.prevent="submit">
     <div class="ni-form-container">
       <slot name="overlay"></slot>
       <header class="ni-form-header" v-if="hasHeader">

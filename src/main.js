@@ -6,7 +6,7 @@ Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
 
-// sync store and router
+// sync store and router...
 import { sync } from 'vuex-router-sync'
 import store from './store/index.js'
 import router from './router/index.js'

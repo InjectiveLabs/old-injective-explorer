@@ -2,17 +2,22 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 Vue.use(Router)
-function r (page) { return require('@/components/Page' + page) }
+
+import Index from "../components/PageIndex"
+import Search from "../components/PageSearch"
+import Block from "../components/PageBlock"
+import Validators from "../components/PageValidators"
+import Validator from "../components/PageValidator"
 
 const routes = [
-  { path: '/', component: r('Index') },
-  { path: '/search', component: r('Search') },
-  { path: '/block/:block', name: 'block', component: r('Block') },
-  { path: '/validators', component: r('Validators') },
+  { path: '/', component: Index },
+  { path: '/search', component: Search },
+  { path: '/block/:block', name: 'block', component: Block },
+  { path: '/validators', component: Validators },
   {
     name: 'validator',
     path: '/validators/:validator',
-    component: r('Validator')
+    component: Validator
   }
 ]
 
