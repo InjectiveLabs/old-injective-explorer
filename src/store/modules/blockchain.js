@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const state = {
-  url: 'http://45.77.53.208:46657',
+  url: 'https://nylira.net',
   status: {
     listen_addr: '',
     sync_info: {
