@@ -8,9 +8,9 @@ page(title='Validators')
     a(@click='toggleSearch'): i.material-icons search
   list-item(
     v-for="v in validators"
-    :key="v.node_info.listen_addr"
+    :key="v.address"
     :title="v.address"
-    :subtitle="v.voting_power"
+    :subtitle="`${v.voting_power}steak (${v.accum} accum)`"
     icon='storage'
     :to="`/validators/${v.address}`")
 </template>

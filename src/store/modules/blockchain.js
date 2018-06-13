@@ -36,8 +36,8 @@ const actions = {
   },
   async getValidators({ state, commit }) {
     let json = await axios.get(`${state.url}/validators`)
-    if (json.data.result && json.data.result.validators.validators) {
-      commit("setValidators", json.data.result.validators.validators)
+    if (json.data.result && json.data.result.validators) {
+      commit("setValidators", json.data.result.validators)
       return Promise.resolve()
     } else {
       console.log("no validators found")

@@ -20,8 +20,8 @@ export default {
   mounted() {
     requestInterval(1000, () => this.$store.dispatch("getConsensusState"))
     requestInterval(1000, () => this.$store.dispatch("getStatus"))
-    requestInterval(1000, () => this.$store.dispatch("getNodes"))
-    requestInterval(30 * 60 * 1000, () => this.$store.dispatch("getValidators"))
+    requestInterval(5000, () => this.$store.dispatch("getNodes"))
+    requestInterval(1000, () => this.$store.dispatch("getValidators"))
     this.$store.dispatch("getConsensusState")
     this.$store.dispatch("getStatus")
     this.$store.dispatch("getNodes")
