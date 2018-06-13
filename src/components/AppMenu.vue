@@ -9,8 +9,10 @@ menu.app-menu
 
   part(title='Learn More')
 
-    list-item(type="anchor" href="https://riot.im/app/#/room/#cosmos_validators:matrix.org" @click.native="close" title="#cosmos_validators" subtitle="validator chat" target="_blank")
-    list-item(type="anchor" href="http://validators.resilient.zone/gaia-5/" @click.native="close" title="resilient.zone" subtitle="validator statistics" target="_blank")
+    list-item(type="anchor" href="https://cosmos.network/validators/tutorial" @click.native="close" title="Join the testnet" subtitle="run a full node" target="_blank")
+    list-item(type="anchor" href="https://faucetcosmos.network" @click.native="close" title="Get testnet tokens" subtitle="100% free" target="_blank")
+    list-item(type="anchor" href="https://riot.im/app/#/room/#cosmos_validators:matrix.org" @click.native="close" title="Join validator chat" subtitle="#cosmos-validators" target="_blank")
+    list-item(type="anchor" href="http://validators.resilient.zone/gaia-5/" @click.native="close" title="resilient.zone" subtitle="more validator stats" target="_blank")
     list-item(type="anchor" href="https://cosmos.network" @click.native="close" title="cosmos.network" subtitle="official website" target="_blank")
 </template>
 
