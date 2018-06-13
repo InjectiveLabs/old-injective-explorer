@@ -5,7 +5,7 @@ page(title='Blockchain')
     list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
     list-item(dt='Full Nodes' :dd='fullNodes.length')
     list-item(dt='Validators' :dd='validatorsOnline')
-      list-item(v-if="bc.status.sync_info.latest_block_height < 1" dt='Voting Power' :dd='votingPower')
+    list-item(dt='Voting Power' :dd='votingPower')
 
   part(title='Current Block')
     list-item(dt='Block Height' :dd='num.prettyInt(bc.status.sync_info.latest_block_height)'
@@ -57,11 +57,14 @@ export default {
         let onlineSteak = split[1].split("/")[0]
         let totalSteak = split[1].split("/")[1]
         let minimumSteak = Math.round(totalSteak * 0.6667)
-        if (onlineSteak < minimumSteak) {
+        if (onlineSteak >= minimumSteak) {
+          return `${split[3] * 100}% prevoted`
+        } else {
           return `${split[3] *
             100}% online (${onlineSteak}steak, need ${minimumSteak}steak)`
         }
       }
+      return "Loading..."
     }
   },
   data: () => ({
