@@ -6,11 +6,12 @@ page(:title="`Node: ${getIp(fullNode)}`")
 
   part(title='ID')
     list-item(dt="Moniker" :dd="fullNode.node_info.moniker")
-    list-item(dt="Listen Address" :dd="fullNode.node_info.listen_addr")
+    list-item(dt="IP" :dd="getIp(fullNode)")
     list-item(dt="Start Date" :dd="fullNode.connection_status && readableDate(fullNode.connection_status.SendMonitor.Start)")
 
   part(title='Pub Key')
     list-item(dt="Value" :dd="fullNode.node_info.id")
+    list-item(dt="Persistent Peer" :dd="persistentPeer")
 
   part(title='Network')
     list-item(dt="Network" :dd="fullNode.node_info.network")
@@ -60,6 +61,11 @@ export default {
       } else {
         return this.tmpFullNode
       }
+    },
+    persistentPeer() {
+      return `${this.fullNode.node_info.id}@${
+        this.fullNode.node_info.listen_addr
+      }`
     }
   },
   data: () => ({

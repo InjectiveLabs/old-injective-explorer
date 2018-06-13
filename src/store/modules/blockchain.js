@@ -59,7 +59,9 @@ const mutations = {
     state.validators = value
   },
   setFullNodes(state, value) {
-    state.fullNodes = value
+    let nodes = value
+    nodes.push(state.status)
+    state.fullNodes = nodes
   },
   setValidator(state, { validator, key }) {
     state.validators[key] = validator
