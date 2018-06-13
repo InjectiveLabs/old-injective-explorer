@@ -15,7 +15,7 @@ page(:title="`Node: ${getIp(fullNode)}`")
 
   part(title='Network')
     list-item(dt="Network" :dd="fullNode.node_info.network")
-    list-item(dt="Version" :dd="fullNode.node_info.version")
+    list-item(dt="Tendermint Version" :dd="fullNode.node_info.version")
     list-item(dt="Channels" :dd="fullNode.node_info.channels")
 
   // part(title='Profile')

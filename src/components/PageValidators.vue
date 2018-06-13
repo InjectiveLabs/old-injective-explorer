@@ -1,7 +1,7 @@
 <template lang="pug">
 page(title='Validators')
   tab-bar
-    router-link(to="/validators" exact) Online ({{ online }})
+    router-link(to="/validators" exact) Total: {{ online }}
     a(@click.prevent='toggleFilter' href="#"): i.material-icons(:class="{'mdi-rotate-180': asc}") filter_list
   // tool-bar
     a(@click='toggleSearch'): i.material-icons search

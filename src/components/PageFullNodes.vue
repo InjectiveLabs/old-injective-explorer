@@ -1,7 +1,7 @@
 <template lang="pug">
-page(title='Peer Nodes')
+page(title='Full Nodes')
   tab-bar
-    router-link(to="/nodes" exact) Total ({{ online }})
+    router-link(to="/nodes" exact): Total {{ online }}
     a(@click.prevent='toggleFilter' href="#"): i.material-icons(:class="{'mdi-rotate-180': asc}") filter_list
   // tool-bar
     a(@click='toggleSearch'): i.material-icons search
