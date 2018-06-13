@@ -6,14 +6,13 @@ page(:title="`Validator: ${validator.address}`")
 
   part(title='ID')
     list-item(dt="Voting Power" :dd="validator.voting_power")
-    list-item(dt="Accum Date" :dd="validator.accum")
+    list-item(dt="Accum" :dd="validator.accum")
 
   part(title='Pub Key')
     list-item(dt="Value" :dd="validator.pub_key.value")
 </template>
 
 <script>
-import moment from "moment"
 import { mapGetters } from "vuex"
 import ListItem from "./NiListItem"
 import ToolBar from "./NiToolBar"
@@ -47,14 +46,6 @@ export default {
       voting_power: "0",
       accum: "0"
     }
-  }),
-  methods: {
-    readableDate(ms) {
-      return moment(ms).format("YYYY-MM-DD h:mm:ss A")
-    }
-  },
-  mounted() {
-    // setInterval(console.log(this.validator), 1000)
-  }
+  })
 }
 </script>
