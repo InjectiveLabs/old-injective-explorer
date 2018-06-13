@@ -17,7 +17,7 @@ page(:title="`Node: ${getIp(fullNode)}`")
     list-item(dt="Version" :dd="fullNode.node_info.version")
     list-item(dt="Channels" :dd="fullNode.node_info.channels")
 
-  part(title='Profile')
+  // part(title='Profile')
     list-item(dt="Total Vote Power" :dd="fullNode.fullNode ? fullNode.fullNode.voting_power : 0 + ' ATOM'" to="/vote-power")
     //list-item(dt="Solo Vote Power" dd="1M ATOM (19%)")
     //list-item(dt="Delg. Vote Power" dd="3.2M ATOM (81%)")
@@ -55,7 +55,7 @@ export default {
         return this.fullNodes.find(
           v =>
             this.urlsafeIp(v.node_info.listen_addr) ===
-            this.$route.params.fullNode + ":46656"
+            this.$route.params.node + ":46656"
         )
       } else {
         return this.tmpFullNode
