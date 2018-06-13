@@ -5,7 +5,7 @@ page(title='Blockchain')
     list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
     list-item(dt='Full Nodes' :dd='fullNodes.length')
     list-item(dt='Validators' :dd='validatorsOnline')
-    list-item(dt='Voting Power' :dd='votingPower')
+    list-item(dt='Prevote State' :dd='votingPower')
 
   part(title='Current Block')
     list-item(dt='Block Height' :dd='num.prettyInt(bc.status.sync_info.latest_block_height)'
@@ -61,7 +61,7 @@ export default {
           return `${split[3] * 100}% prevoted`
         } else {
           return `${split[3] *
-            100}% online (${onlineSteak}steak, need ${minimumSteak}steak)`
+            100}% prevoted (${onlineSteak}steak, need ${minimumSteak}steak)`
         }
       }
       return "Loading..."
