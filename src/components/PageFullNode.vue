@@ -1,24 +1,24 @@
 <template lang="pug">
-page(:title="`Node: ${getIp(validator)}`")
+page(:title="`Node: ${getIp(fullNode)}`")
   tool-bar
-    router-link(to="/validators" exact): i.material-icons arrow_back
-    anchor-copy(:value="validator.node_info.id" icon="content_copy")
+    router-link(to="/nodes" exact): i.material-icons arrow_back
+    anchor-copy(:value="fullNode.node_info.id" icon="content_copy")
 
   part(title='ID')
-    list-item(dt="Moniker" :dd="validator.node_info.moniker")
-    list-item(dt="Listen Address" :dd="validator.node_info.listen_addr")
-    list-item(dt="Start Date" :dd="validator.connection_status && readableDate(validator.connection_status.SendMonitor.Start)")
+    list-item(dt="Moniker" :dd="fullNode.node_info.moniker")
+    list-item(dt="Listen Address" :dd="fullNode.node_info.listen_addr")
+    list-item(dt="Start Date" :dd="fullNode.connection_status && readableDate(fullNode.connection_status.SendMonitor.Start)")
 
   part(title='Pub Key')
-    list-item(dt="Value" :dd="validator.node_info.id")
+    list-item(dt="Value" :dd="fullNode.node_info.id")
 
   part(title='Network')
-    list-item(dt="Network" :dd="validator.node_info.network")
-    list-item(dt="Version" :dd="validator.node_info.version")
-    list-item(dt="Channels" :dd="validator.node_info.channels")
+    list-item(dt="Network" :dd="fullNode.node_info.network")
+    list-item(dt="Version" :dd="fullNode.node_info.version")
+    list-item(dt="Channels" :dd="fullNode.node_info.channels")
 
   part(title='Profile')
-    list-item(dt="Total Vote Power" :dd="validator.validator ? validator.validator.voting_power : 0 + ' ATOM'" to="/vote-power")
+    list-item(dt="Total Vote Power" :dd="fullNode.fullNode ? fullNode.fullNode.voting_power : 0 + ' ATOM'" to="/vote-power")
     //list-item(dt="Solo Vote Power" dd="1M ATOM (19%)")
     //list-item(dt="Delg. Vote Power" dd="3.2M ATOM (81%)")
     //list-item(dt="Vote History" dd="37 Votes" to="/votes")
@@ -40,7 +40,7 @@ import Page from "./NiPage"
 import Part from "./NiPart"
 import AnchorCopy from "./AnchorCopy"
 export default {
-  name: "page-validator",
+  name: "page-fullNode",
   components: {
     AnchorCopy,
     ListItem,
@@ -49,24 +49,24 @@ export default {
     ToolBar
   },
   computed: {
-    ...mapGetters(["peers"]),
-    validator() {
-      if (this.peers && this.peers.length > 0) {
-        return this.peers.find(
+    ...mapGetters(["fullNodes"]),
+    fullNode() {
+      if (this.fullNodes && this.fullNodes.length > 0) {
+        return this.fullNodes.find(
           v =>
             this.urlsafeIp(v.node_info.listen_addr) ===
-            this.$route.params.validator + ":46656"
+            this.$route.params.fullNode + ":46656"
         )
       } else {
-        return this.tmpValidator
+        return this.tmpFullNode
       }
     }
   },
   data: () => ({
-    tmpValidator: {
+    tmpFullNode: {
       node_info: {
         moniker: "Loading...",
-        pub_key: "todoreplacemewithvalidatorpubkey"
+        pub_key: "todoreplacemewithfullNodepubkey"
       }
     }
   }),
@@ -74,10 +74,10 @@ export default {
     urlsafeIp(ip) {
       return ip.split(".").join("-")
     },
-    getIp(validator) {
+    getIp(fullNode) {
       return (
-        validator.node_info.listen_addr &&
-        validator.node_info.listen_addr.split(":")[0]
+        fullNode.node_info.listen_addr &&
+        fullNode.node_info.listen_addr.split(":")[0]
       )
     },
     readableDate(ms) {
@@ -85,7 +85,7 @@ export default {
     }
   },
   mounted() {
-    // setInterval(console.log(this.validator), 1000)
+    // setInterval(console.log(this.fullNode), 1000)
   }
 }
 </script>

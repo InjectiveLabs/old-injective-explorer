@@ -1,8 +1,5 @@
 export const bc = state => state.blockchain
-export const peers = state => {
-  return state.blockchain.peers.map(p => {
-    p.validator = state.blockchain.validators[p.node_info.listen_addr]
-    return p
-  })
-}
+export const fullNodes = state => state.blockchain.fullNodes
+export const consensusState = state => state.blockchain.consensusState
+export const validators = state => state.blockchain.validators
 export const config = state => state.config

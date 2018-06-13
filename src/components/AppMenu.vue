@@ -1,37 +1,42 @@
 <template lang="pug">
 menu.app-menu
   part(title='Network Explorer')
+
     list-item(to="/" exact @click.native="close" title="Blockchain")
-    list-item(to="/validators" exact @click.native="close" :title="`Peer Nodes (${peers.length})`" v-bind:class="{ 'active': isValidatorPage }")
+    list-item(to="/nodes" exact @click.native="close" :title="`Full Nodes (${fullNodes.length})`" v-bind:class="{ 'active': isValidatorPage }")
+    list-item(to="/validators" exact @click.native="close" :title="`Validators (${validators.length})`" v-bind:class="{ 'active': isValidatorPage }")
     list-item(to="/search" exact @click.native="close" title="Search")
+
   part(title='Learn More')
+
     list-item(type="anchor" href="https://riot.im/app/#/room/#cosmos_validators:matrix.org" @click.native="close" title="#cosmos_validators" subtitle="validator chat" target="_blank")
     list-item(type="anchor" href="http://validators.resilient.zone/gaia-5/" @click.native="close" title="resilient.zone" subtitle="validator statistics" target="_blank")
     list-item(type="anchor" href="https://cosmos.network" @click.native="close" title="cosmos.network" subtitle="official website" target="_blank")
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import noScroll from 'no-scroll'
-import ListItem from './NiListItem'
-import Part from './NiPart'
+import { mapGetters } from "vuex"
+import noScroll from "no-scroll"
+import ListItem from "./NiListItem"
+import Part from "./NiPart"
 export default {
-  name: 'app-menu',
+  name: "app-menu",
   components: {
     ListItem,
     Part
   },
   computed: {
-    ...mapGetters(['proposals', 'peers']),
-    proposalAlerts () {
-      return this.proposals
-        .filter(p => p.flags.read === false).length
+    ...mapGetters(["proposals", "fullNodes", "validators"]),
+    proposalAlerts() {
+      return this.proposals.filter(p => p.flags.read === false).length
     },
-    isValidatorPage () { return this.$route.params.validator }
+    isValidatorPage() {
+      return this.$route.params.validator
+    }
   },
   methods: {
-    close () {
-      this.$store.commit('setActiveMenu', '')
+    close() {
+      this.$store.commit("setActiveMenu", "")
       noScroll.off()
     }
   }

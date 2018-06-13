@@ -9,7 +9,7 @@ header.ni-page-header
 
 <script>
 export default {
-  name: 'ni-page-header'
+  name: "ni-page-header"
 }
 </script>
 
@@ -17,7 +17,7 @@ export default {
 @require '../styles/variables.styl'
 
 .ni-page-header
-  min-height 3rem
+  height 3rem
   border-bottom 1px solid bc-dim
   // background app-fg
   padding 0.75rem 1rem 0.75rem - px
@@ -30,7 +30,7 @@ export default {
 .ni-page-header-title > div
   display flex
   align-items center
-  
+
   font-size 1.25rem
   line-height 1.5rem
   font-weight 400

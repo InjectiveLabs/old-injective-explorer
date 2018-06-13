@@ -7,19 +7,14 @@
 </template>
 
 <script>
-import PageHeader from './NiPageHeader'
-import PageFooter from './NiPageFooter'
+import PageHeader from "./NiPageHeader"
+import PageFooter from "./NiPageFooter"
 export default {
-  name: 'page-search',
-  props: ['title'],
+  name: "page-search",
+  props: ["title"],
   components: {
     PageHeader,
     PageFooter
   }
 }
 </script>
-
-<style lang="stylus">
-@require '~@/styles/variables.styl'
-</style>
-

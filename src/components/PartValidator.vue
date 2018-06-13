@@ -13,37 +13,39 @@ part.part-validator(:title="'Validator - ' + validator.node_info.moniker")
 </template>
 
 <script>
-import shortid from 'shortid'
-import { maxBy } from 'lodash'
-import num from '../scripts/num'
-import Part from './NiPart'
-import ListItem from './NiListItem'
+import shortid from "shortid"
+import { maxBy } from "lodash"
+import num from "../scripts/num"
+import Part from "./NiPart"
+import ListItem from "./NiListItem"
 export default {
-  name: 'part-validator',
+  name: "part-validator",
   components: {
     ListItem,
     Part
   },
   computed: {
-    ip () {
-      return this.validator.node_info.remote_addr.split(':')[0]
+    ip() {
+      return this.validator.node_info.remote_addr.split(":")[0]
     },
-    url () { return `http://${this.ip}:46657` },
-    currentRate () {
+    url() {
+      return `http://${this.ip}:46657`
+    },
+    currentRate() {
       return this.validator.connection_status.SendMonitor.CurRate
     },
-    averageRate () {
+    averageRate() {
       return this.validator.connection_status.SendMonitor.AvgRate
     },
-    mapStyle () {
+    mapStyle() {
       return {
-        'background-size': 'cover',
-        'background-image': 'url(' + this.mapSrc + ')',
-        'background-repeat': 'no-repeat',
-        'background-position': 'center center'
+        "background-size": "cover",
+        "background-image": "url(" + this.mapSrc + ")",
+        "background-repeat": "no-repeat",
+        "background-position": "center center"
       }
     },
-    mapSrc () {
+    mapSrc() {
       let zoom = 8
       let width = 192
       let height = 96
@@ -56,48 +58,48 @@ export default {
   data: () => ({
     id: shortid.generate(),
     num: num,
-    city: 'Loading...',
-    timezone: 'Loading...',
+    city: "Loading...",
+    timezone: "Loading...",
     currentRates: [],
     coordinates: [],
-    apiKey: 'AIzaSyDSc5AkfkFE4unWjKci1g6YcsQWviF9sHE'
+    apiKey: "AIzaSyDSc5AkfkFE4unWjKci1g6YcsQWviF9sHE"
   }),
   methods: {
-    updateCurrentRates (value) {
+    updateCurrentRates(value) {
       this.currentRates.push({
         key: new Date().getTime(),
         value: value,
-        height: '0%'
+        height: "0%"
       })
 
       // keep the length of the chart at x blocks
       if (this.currentRates.length > 60) this.currentRates.shift()
 
-      let biggest = maxBy(this.currentRates, 'value').value
-      this.currentRates.map(function (r) {
+      let biggest = maxBy(this.currentRates, "value").value
+      this.currentRates.map(function(r) {
         // console.log('biggest', biggest)
         // console.log('r.value', r.value)
         // console.log('r.value / biggest', r.value / biggest)
-        r.height = r.value / biggest * 100 + '%'
+        r.height = (r.value / biggest) * 100 + "%"
       })
     }
   },
-  mounted () {
+  mounted() {
     let url = `https://freegeoip.net/json/${this.ip}`
     let self = this
     fetch(url)
       .then(res => res.json())
-      .then((data) => {
+      .then(data => {
         // console.log('Checkout this JSON! ', data)
         self.timezone = data.time_zone
         self.city = data.city
         self.coordinates = [data.latitude, data.longitude]
       })
-    .catch(err => console.error(err))
+      .catch(err => console.error(err))
   },
-  props: ['validator'],
+  props: ["validator"],
   watch: {
-    'currentRate' (oldVal, newVal) {
+    currentRate(oldVal, newVal) {
       // console.log('delta current rate', oldVal, newVal)
       this.updateCurrentRates(newVal)
     }
@@ -126,4 +128,3 @@ export default {
       background link
       border-right 1px solid #000
 </style>
-

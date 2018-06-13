@@ -1,12 +1,12 @@
-import axios from 'axios'
+import axios from "axios"
 
 const state = {
-  url: 'https://nylira.net',
+  url: "https://nylira.net",
   status: {
-    listen_addr: '',
+    listen_addr: "",
     sync_info: {
       latest_block_height: 0,
-      latest_block_hash: ''
+      latest_block_hash: ""
     },
     node_info: {
       version: null,
@@ -14,78 +14,54 @@ const state = {
       moniker: null
     }
   },
-  peers: [],
-  validators: []
-}
-function reflect (promise) {
-  return promise.then(
-    function (v) {
-      return { v: v, status: 'resolved' }
-    },
-    function (e) {
-      return { e: e, status: 'rejected' }
-    }
-  )
+  fullNodes: [],
+  validators: [],
+  consensusState: {}
 }
 
 const actions = {
-  async getStatus ({ state, commit }) {
-    let json = await axios.get(`${state.url}/status`)
-    commit('setStatus', json.data.result)
+  async getConsensusState({ state, commit }) {
+    let json = await axios.get(`${state.url}/consensus_state`)
+    commit("setConsensusState", json.data.result.round_state)
   },
-  async getNodes ({ state, commit }) {
+  async getStatus({ state, commit }) {
+    let json = await axios.get(`${state.url}/status`)
+    commit("setStatus", json.data.result)
+  },
+  async getNodes({ state, commit }) {
     let json = await axios.get(`${state.url}/net_info`)
-    commit('setPeers', json.data.result.peers)
+    let peers = json.data.result.peers
+    commit("setFullNodes", peers)
     return Promise.resolve()
   },
-  // eslint-disable-next-line
-  getValidators ({ commit, state, dispatch }) {
-    let obj = state.peers
-      .map(p => p.node_info.listen_addr)
-      .reduce((o, key) => ({ ...o, [key]: false }), {})
-    commit('setValidators', obj)
-    // eslint-disable-next-line
-    let all = state.peers.map((peer, key) => {
-      return new Promise((resolve, reject) => {
-        axios
-          .get(
-            `http://${peer.node_info.listen_addr.replace(46656, 46657)}/status`
-          )
-          .then(json => {
-            commit('setValidator', {
-              validator: json.data.result.validator_info,
-              key: peer.node_info.listen_addr
-            })
-            resolve()
-          })
-          .catch(reject)
-      })
-    })
-
-    return Promise.all(all.map(reflect))
-      .then(function (results) {
-        console.log('results', results)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+  async getValidators({ state, commit }) {
+    let json = await axios.get(`${state.url}/validators`)
+    if (json.data.result && json.data.result.validators.validators) {
+      commit("setValidators", json.data.result.validators.validators)
+      return Promise.resolve()
+    } else {
+      console.log("no validators found")
+    }
   }
 }
 
 const mutations = {
-  setUrl (state, value) {
+  setUrl(state, value) {
     state.url = value
   },
-  setStatus (state, value) {
+  setConsensusState(state, value) {
+    state.consensusState = value
+  },
+  setStatus(state, value) {
     state.status = value
   },
-  setValidators (state, value) {
+  setValidators(state, value) {
     state.validators = value
   },
-  setPeers (state, value) {
-    state.peers = value
+  setFullNodes(state, value) {
+    state.fullNodes = value
   },
-  setValidator (state, { validator, key }) {
+  setValidator(state, { validator, key }) {
     state.validators[key] = validator
   }
 }

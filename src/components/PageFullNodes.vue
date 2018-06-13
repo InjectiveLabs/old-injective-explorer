@@ -1,28 +1,29 @@
 <template lang="pug">
-page(title='Validators')
+page(title='Peer Nodes')
   tab-bar
-    router-link(to="/validators" exact) Online ({{ online }})
+    router-link(to="/nodes" exact) Total ({{ online }})
     a(@click.prevent='toggleFilter' href="#"): i.material-icons(:class="{'mdi-rotate-180': asc}") filter_list
   // tool-bar
     a(@click='toggleSearch'): i.material-icons search
     a(@click='toggleSearch'): i.material-icons search
   list-item(
-    v-for="v in validators"
-    :key="v.node_info.listen_addr"
-    :title="v.address"
-    :subtitle="v.voting_power"
+    v-for="i in orderedFullNodes"
+    :key="i.node_info.listen_addr"
+    :title="i.node_info.moniker"
+    :subtitle="getIp(i)"
     icon='storage'
-    :to="`/validators/${v.address}`")
+    :to="`/nodes/${urlsafeIp(getIp(i))}`")
 </template>
 
 <script>
 import { mapGetters } from "vuex"
+import { orderBy } from "lodash"
 import ListItem from "./NiListItem"
 import Page from "./NiPage"
 import TabBar from "./NiTabBar"
 import ToolBar from "./NiToolBar"
 export default {
-  name: "page-validators",
+  name: "page-nodes",
   components: {
     ListItem,
     Page,
@@ -31,13 +32,24 @@ export default {
   },
   data() {
     return {
-      asc: false
+      asc: true
     }
   },
   computed: {
-    ...mapGetters(["validators"]),
+    ...mapGetters(["fullNodes"]),
+    orderedFullNodes() {
+      if (this.fullNodes) {
+        return orderBy(
+          this.fullNodes,
+          "node_info.moniker",
+          this.asc ? "asc" : "desc"
+        )
+      } else {
+        return []
+      }
+    },
     online() {
-      return this.validators.length
+      return this.fullNodes.length
     }
   },
   methods: {
@@ -51,14 +63,8 @@ export default {
     urlsafeIp(ip) {
       return ip.split(".").join("-")
     },
-    getIp(validator) {
-      return validator.node_info.listen_addr.split(":")[0]
-    },
-    getTitle(v) {
-      return (
-        v.node_info.moniker +
-        (v.validator ? " — " + v.validator.voting_power : " — 0")
-      )
+    getIp(fullNode) {
+      return fullNode.node_info.listen_addr.split(":")[0]
     }
   }
 }

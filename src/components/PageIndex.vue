@@ -3,7 +3,9 @@ page(title='Blockchain')
   part(title='Blockchain')
     list-item(dt='Network' :dd='bc.status.node_info.network')
     list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
-    list-item(dt='Peer Nodes' :dd='peers.length')
+    list-item(dt='Full Nodes' :dd='fullNodes.length')
+    list-item(dt='Validators' :dd='validatorsOnline')
+    list-item(dt='Voting Power' :dd='votingPower')
 
   part(title='Current Block')
     list-item(dt='Block Height' :dd='num.prettyInt(bc.status.sync_info.latest_block_height)'
@@ -18,32 +20,66 @@ page(title='Blockchain')
 </template>
 
 <script>
-import moment from 'moment'
-import num from '../scripts/num'
-import { mapGetters } from 'vuex'
-import ListItem from './NiListItem'
-import Page from './NiPage'
-import Part from './NiPart'
+import moment from "moment"
+import num from "../scripts/num"
+import { mapGetters } from "vuex"
+import ListItem from "./NiListItem"
+import Page from "./NiPage"
+import Part from "./NiPart"
 export default {
-  name: 'page-index',
+  name: "page-index",
   components: {
     ListItem,
     Page,
     Part
   },
   computed: {
-    ...mapGetters(['bc', 'config', 'peers'])
+    ...mapGetters([
+      "bc",
+      "config",
+      "fullNodes",
+      "validators",
+      "consensusState"
+    ]),
+    validatorsOnline() {
+      if (this.validators && this.validators.length > 0) {
+        return this.validators.length
+      }
+      if (this.consensusState && this.consensusState.height_vote_set) {
+        return "STALLED - need 67% voting power"
+      }
+      return "Loading..."
+    },
+    votingPower() {
+      if (this.consensusState && this.consensusState.height_vote_set) {
+        let prevotes = this.consensusState.height_vote_set[0].prevotes_bit_array
+        let split = prevotes.split(" ")
+        let onlineSteak = split[1].split("/")[0]
+        let totalSteak = split[1].split("/")[1]
+        let minimumSteak = Math.round(totalSteak * 0.6667)
+        if (onlineSteak >= minimumSteak) {
+          return `${split[3] * 100}% online (66.7% needed)`
+        } else {
+          return `${split[3] *
+            100}% online (${onlineSteak}steak, need ${minimumSteak}steak)`
+        }
+      }
+      return "Loading..."
+    }
   },
   data: () => ({
     moment: moment,
     num: num
   }),
   methods: {
-    readableDate (ms) {
-      return moment(ms).format('YYYY-MM-DD h:mm:ss A')
+    readableDate(ms) {
+      return moment(ms).format("YYYY-MM-DD h:mm:ss A")
     },
-    toggleBlockchainSelect () {
-      this.$store.commit('SET_CONFIG_BLOCKCHAIN_SELECT', !this.config.blockchainSelect)
+    toggleBlockchainSelect() {
+      this.$store.commit(
+        "SET_CONFIG_BLOCKCHAIN_SELECT",
+        !this.config.blockchainSelect
+      )
     }
   }
 }
