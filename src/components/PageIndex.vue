@@ -1,5 +1,5 @@
 <template lang="pug">
-page(title='Blockchain')
+tm-page(title='Blockchain')
   part(title='Blockchain')
     tm-list-item(dt='Network' :dd='bc.status.node_info.network')
     tm-list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
@@ -23,14 +23,13 @@ page(title='Blockchain')
 import moment from "moment"
 import num from "../scripts/num"
 import { mapGetters } from "vuex"
-import {TmListItem} from "@tendermint/ui"
-import Page from "./NiPage"
+import {TmListItem, TmPage} from "@tendermint/ui"
 import Part from "./NiPart"
 export default {
   name: "page-index",
   components: {
     TmListItem,
-    Page,
+    TmPage,
     Part
   },
   computed: {

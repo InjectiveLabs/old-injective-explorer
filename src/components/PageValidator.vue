@@ -1,5 +1,5 @@
 <template lang="pug">
-page(:title="`Validator: ${validator.address}`")
+tm-page(:title="`Validator: ${validator.address}`")
   tool-bar
     router-link(to="/validators" exact): i.material-icons arrow_back
     anchor-copy(:value="validator.address" icon="content_copy")
@@ -14,9 +14,8 @@ page(:title="`Validator: ${validator.address}`")
 
 <script>
 import { mapGetters } from "vuex"
-import {TmListItem} from "@tendermint/ui"
+import {TmListItem, TmPage} from "@tendermint/ui"
 import ToolBar from "./NiToolBar"
-import Page from "./NiPage"
 import Part from "./NiPart"
 import AnchorCopy from "./AnchorCopy"
 export default {
@@ -24,7 +23,7 @@ export default {
   components: {
     AnchorCopy,
     TmListItem,
-    Page,
+    TmPage,
     Part,
     ToolBar
   },

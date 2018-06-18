@@ -1,5 +1,5 @@
 <template lang="pug">
-page(:title="`Block ${block.header.height}`")
+tm-page(:title="`Block ${block.header.height}`")
   tool-bar
     router-link(to="/"): i.material-icons arrow_back
     a(:href="blockUrl" target="_blank") JSON
@@ -41,16 +41,15 @@ import createHash from 'create-hash'
 import varint from 'varint'
 import b64 from 'base64-js'
 import ToolBar from './NiToolBar'
-import {TmListItem} from '@tendermint/ui'
+import {TmListItem, TmPage} from '@tendermint/ui'
 import Part from './NiPart'
-import Page from './NiPage'
 export default {
-  name: 'page-block',
+  name: 'tm-page-block',
   components: {
     ToolBar,
     TmListItem,
     Part,
-    Page
+    TmPage
   },
   computed: {
     ...mapGetters(['bc'])

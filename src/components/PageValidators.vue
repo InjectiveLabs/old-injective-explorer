@@ -1,5 +1,5 @@
 <template lang="pug">
-page(title='Validators')
+tm-page(title='Validators')
   tab-bar
     router-link(to="/validators" exact) Total: {{ online }}
     a(@click.prevent='toggleFilter' href="#"): i.material-icons(:class="{'mdi-rotate-180': asc}") filter_list
@@ -17,15 +17,14 @@ page(title='Validators')
 
 <script>
 import { mapGetters } from "vuex"
-import {TmListItem} from "@tendermint/ui"
-import Page from "./NiPage"
+import {TmListItem, TmPage} from "@tendermint/ui"
 import TabBar from "./NiTabBar"
 import ToolBar from "./NiToolBar"
 export default {
   name: "page-validators",
   components: {
     TmListItem,
-    Page,
+    TmPage,
     TabBar,
     ToolBar
   },

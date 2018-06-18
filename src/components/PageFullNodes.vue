@@ -1,5 +1,5 @@
 <template lang="pug">
-page(title='Full Nodes')
+tm-page(title='Full Nodes')
   tab-bar
     router-link(to="/nodes" exact): Total {{ online }}
     a(@click.prevent='toggleFilter' href="#"): i.material-icons(:class="{'mdi-rotate-180': asc}") filter_list
@@ -18,15 +18,14 @@ page(title='Full Nodes')
 <script>
 import { mapGetters } from "vuex"
 import { orderBy } from "lodash"
-import {TmListItem} from "@tendermint/ui"
-import Page from "./NiPage"
+import {TmListItem, TmPage} from "@tendermint/ui"
 import TabBar from "./NiTabBar"
 import ToolBar from "./NiToolBar"
 export default {
   name: "page-nodes",
   components: {
     TmListItem,
-    Page,
+    TmPage,
     TabBar,
     ToolBar
   },
