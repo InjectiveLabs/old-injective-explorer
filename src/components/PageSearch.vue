@@ -1,8 +1,8 @@
 <template lang="pug">
 page(title='Search')
   part(title='Search')
-    form-struct(:submit="search")
-      form-group
+    tm-form-struct(:submit="search")
+      tm-form-group
         field#search-input(
           type="text"
           placeholder="Search for block"
@@ -24,9 +24,7 @@ page(title='Search')
 import { mapGetters } from 'vuex'
 import Btn from '@nylira/vue-button'
 import Field from '@nylira/vue-field'
-import FormGroup from './NiFormGroup'
-import FormStruct from './NiFormStruct'
-import {TmListItem} from '@tendermint/ui'
+import {TmListItem, TmFormGroup, TmFormStruct} from '@tendermint/ui'
 import Page from './NiPage'
 import Part from './NiPart'
 export default {
@@ -34,8 +32,8 @@ export default {
   components: {
     Btn,
     Field,
-    FormGroup,
-    FormStruct,
+    TmFormGroup,
+    TmFormStruct,
     TmListItem,
     Page,
     Part
