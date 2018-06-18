@@ -1,15 +1,15 @@
 <template lang="pug">
 part.part-validator(:title="'Validator - ' + validator.node_info.moniker")
-  list-item(dt='Location'): div(slot="dd"): .map-img(:style='mapStyle')
-  list-item(:dt="currentRate + ' byte/s'")
+  tm-list-item(dt='Location'): div(slot="dd"): .map-img(:style='mapStyle')
+  tm-list-item(:dt="currentRate + ' byte/s'")
     div(slot="dd")
       .sparkline
         .bar(
           v-for='rate in currentRates'
           :key='rate.key'
           :style='{ height: rate.height }')
-  list-item(dt="Avg Rate" :dd="averageRate + ' byte/s'")
-  list-item(dt="Timezone" :dd="timezone")
+  tm-list-item(dt="Avg Rate" :dd="averageRate + ' byte/s'")
+  tm-list-item(dt="Timezone" :dd="timezone")
 </template>
 
 <script>
@@ -17,11 +17,11 @@ import shortid from "shortid"
 import { maxBy } from "lodash"
 import num from "../scripts/num"
 import Part from "./NiPart"
-import ListItem from "./NiListItem"
+import {TmListItem} from "@tendermint/ui"
 export default {
   name: "part-validator",
   components: {
-    ListItem,
+    TmListItem,
     Part
   },
   computed: {

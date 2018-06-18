@@ -15,9 +15,9 @@ page(title='Search')
         btn(type="submit" icon="search" value="Go")
 
   part(title='Sample Queries')
-    // list-item(dt='Address' dd='3HNSiAq7wFDaPsYDcUxNSRMD78qVcYKicw' @click.native="fillField('3HNSiAq7wFDaPsYDcUxNSRMD78qVcYKicw')")
-    // list-item(dt='Transaction' dd='878797d16182f6ffa5e98cd88576ab973b8d6f9dfe8ff441bd3521a7d8559800' @click.native="fillField('878797d16182f6ffa5e98cd88576ab973b8d6f9dfe8ff441bd3521a7d8559800')")
-    list-item(dt='Block #' dd='1337' @click.native="fillField('1337')")
+    // tm-list-item(dt='Address' dd='3HNSiAq7wFDaPsYDcUxNSRMD78qVcYKicw' @click.native="fillField('3HNSiAq7wFDaPsYDcUxNSRMD78qVcYKicw')")
+    // tm-list-item(dt='Transaction' dd='878797d16182f6ffa5e98cd88576ab973b8d6f9dfe8ff441bd3521a7d8559800' @click.native="fillField('878797d16182f6ffa5e98cd88576ab973b8d6f9dfe8ff441bd3521a7d8559800')")
+    tm-list-item(dt='Block #' dd='1337' @click.native="fillField('1337')")
 </template>
 
 <script>
@@ -26,7 +26,7 @@ import Btn from '@nylira/vue-button'
 import Field from '@nylira/vue-field'
 import FormGroup from './NiFormGroup'
 import FormStruct from './NiFormStruct'
-import ListItem from './NiListItem'
+import {TmListItem} from '@tendermint/ui'
 import Page from './NiPage'
 import Part from './NiPart'
 export default {
@@ -36,7 +36,7 @@ export default {
     Field,
     FormGroup,
     FormStruct,
-    ListItem,
+    TmListItem,
     Page,
     Part
   },

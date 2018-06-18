@@ -5,37 +5,37 @@ page(:title="`Node: ${getIp(fullNode)}`")
     anchor-copy(:value="fullNode.node_info.id" icon="content_copy")
 
   part(title='ID')
-    list-item(dt="Moniker" :dd="fullNode.node_info.moniker")
-    list-item(dt="IP" :dd="getIp(fullNode)")
-    list-item(dt="Start Date" :dd="fullNode.connection_status && readableDate(fullNode.connection_status.SendMonitor.Start)")
+    tm-list-item(dt="Moniker" :dd="fullNode.node_info.moniker")
+    tm-list-item(dt="IP" :dd="getIp(fullNode)")
+    tm-list-item(dt="Start Date" :dd="fullNode.connection_status && readableDate(fullNode.connection_status.SendMonitor.Start)")
 
   part(title='Pub Key')
-    list-item(dt="Value" :dd="fullNode.node_info.id")
-    list-item(dt="Persistent Peer" :dd="persistentPeer")
+    tm-list-item(dt="Value" :dd="fullNode.node_info.id")
+    tm-list-item(dt="Persistent Peer" :dd="persistentPeer")
 
   part(title='Network')
-    list-item(dt="Network" :dd="fullNode.node_info.network")
-    list-item(dt="Tendermint Version" :dd="fullNode.node_info.version")
-    list-item(dt="Channels" :dd="fullNode.node_info.channels")
+    tm-list-item(dt="Network" :dd="fullNode.node_info.network")
+    tm-list-item(dt="Tendermint Version" :dd="fullNode.node_info.version")
+    tm-list-item(dt="Channels" :dd="fullNode.node_info.channels")
 
   // part(title='Profile')
-    list-item(dt="Total Vote Power" :dd="fullNode.fullNode ? fullNode.fullNode.voting_power : 0 + ' ATOM'" to="/vote-power")
-    //list-item(dt="Solo Vote Power" dd="1M ATOM (19%)")
-    //list-item(dt="Delg. Vote Power" dd="3.2M ATOM (81%)")
-    //list-item(dt="Vote History" dd="37 Votes" to="/votes")
-    //list-item(dt="Proposals" dd="13" to="/proposals")
-    //list-item(dt="Slashes" dd="6" to="/slashes")
+    tm-list-item(dt="Total Vote Power" :dd="fullNode.fullNode ? fullNode.fullNode.voting_power : 0 + ' ATOM'" to="/vote-power")
+    //tm-list-item(dt="Solo Vote Power" dd="1M ATOM (19%)")
+    //tm-list-item(dt="Delg. Vote Power" dd="3.2M ATOM (81%)")
+    //tm-list-item(dt="Vote History" dd="37 Votes" to="/votes")
+    //tm-list-item(dt="Proposals" dd="13" to="/proposals")
+    //tm-list-item(dt="Slashes" dd="6" to="/slashes")
 
   //part(title='Staking')
-    list-item(dt="Delegators" dd="" to="/delegators")
-    list-item(dt="Earn Rate" dd="8.1K ATOM / day'")
-    list-item(dt="Total Earnings" dd="301.8K ATOM")
+    tm-list-item(dt="Delegators" dd="" to="/delegators")
+    tm-list-item(dt="Earn Rate" dd="8.1K ATOM / day'")
+    tm-list-item(dt="Total Earnings" dd="301.8K ATOM")
 </template>
 
 <script>
 import moment from "moment"
 import { mapGetters } from "vuex"
-import ListItem from "./NiListItem"
+import {TmListItem} from "@tendermint/ui"
 import ToolBar from "./NiToolBar"
 import Page from "./NiPage"
 import Part from "./NiPart"
@@ -44,7 +44,7 @@ export default {
   name: "page-fullNode",
   components: {
     AnchorCopy,
-    ListItem,
+    TmListItem,
     Page,
     Part,
     ToolBar

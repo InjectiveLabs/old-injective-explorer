@@ -5,16 +5,16 @@ page(:title="`Validator: ${validator.address}`")
     anchor-copy(:value="validator.address" icon="content_copy")
 
   part(title='ID')
-    list-item(dt="Voting Power" :dd="validator.voting_power")
-    list-item(dt="Accum" :dd="validator.accum")
+    ui-list-item(dt="Voting Power" :dd="validator.voting_power")
+    ui-list-item(dt="Accum" :dd="validator.accum")
 
   part(title='Pub Key')
-    list-item(dt="Value" :dd="validator.pub_key.value")
+    ui-list-item(dt="Value" :dd="validator.pub_key.value")
 </template>
 
 <script>
 import { mapGetters } from "vuex"
-import ListItem from "./NiListItem"
+import {TmListItem} from "@tendermint/ui"
 import ToolBar from "./NiToolBar"
 import Page from "./NiPage"
 import Part from "./NiPart"
@@ -23,7 +23,7 @@ export default {
   name: "page-validator",
   components: {
     AnchorCopy,
-    ListItem,
+    TmListItem,
     Page,
     Part,
     ToolBar

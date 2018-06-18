@@ -1,19 +1,19 @@
 <template lang="pug">
 .ni-page
-  page-header
+  tm-page-header
     div(slot='title') {{ title }}
   main.ni-page-main: slot
   page-footer
 </template>
 
 <script>
-import PageHeader from "./NiPageHeader"
+import {TmPageHeader} from "@tendermint/ui"
 import PageFooter from "./NiPageFooter"
 export default {
   name: "page-search",
   props: ["title"],
   components: {
-    PageHeader,
+    TmPageHeader,
     PageFooter
   }
 }

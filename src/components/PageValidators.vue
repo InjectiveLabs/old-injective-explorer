@@ -6,7 +6,7 @@ page(title='Validators')
   // tool-bar
     a(@click='toggleSearch'): i.material-icons search
     a(@click='toggleSearch'): i.material-icons search
-  list-item(
+  tm-list-item(
     v-for="v in validators"
     :key="v.address"
     :title="v.address"
@@ -17,14 +17,14 @@ page(title='Validators')
 
 <script>
 import { mapGetters } from "vuex"
-import ListItem from "./NiListItem"
+import {TmListItem} from "@tendermint/ui"
 import Page from "./NiPage"
 import TabBar from "./NiTabBar"
 import ToolBar from "./NiToolBar"
 export default {
   name: "page-validators",
   components: {
-    ListItem,
+    TmListItem,
     Page,
     TabBar,
     ToolBar

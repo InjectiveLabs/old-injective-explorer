@@ -6,7 +6,7 @@ page(title='Full Nodes')
   // tool-bar
     a(@click='toggleSearch'): i.material-icons search
     a(@click='toggleSearch'): i.material-icons search
-  list-item(
+  tm-list-item(
     v-for="i in orderedFullNodes"
     :key="i.node_info.listen_addr"
     :title="i.node_info.moniker"
@@ -18,14 +18,14 @@ page(title='Full Nodes')
 <script>
 import { mapGetters } from "vuex"
 import { orderBy } from "lodash"
-import ListItem from "./NiListItem"
+import {TmListItem} from "@tendermint/ui"
 import Page from "./NiPage"
 import TabBar from "./NiTabBar"
 import ToolBar from "./NiToolBar"
 export default {
   name: "page-nodes",
   components: {
-    ListItem,
+    TmListItem,
     Page,
     TabBar,
     ToolBar

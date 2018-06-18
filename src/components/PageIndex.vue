@@ -1,35 +1,35 @@
 <template lang="pug">
 page(title='Blockchain')
   part(title='Blockchain')
-    list-item(dt='Network' :dd='bc.status.node_info.network')
-    list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
-    list-item(dt='Full Nodes' :dd='fullNodes.length')
-    list-item(dt='Validators' :dd='validatorsOnline')
-    list-item(dt='Prevote State' :dd='votingPower')
+    tm-list-item(dt='Network' :dd='bc.status.node_info.network')
+    tm-list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
+    tm-list-item(dt='Full Nodes' :dd='fullNodes.length')
+    tm-list-item(dt='Validators' :dd='validatorsOnline')
+    tm-list-item(dt='Prevote State' :dd='votingPower')
 
   part(title='Current Block')
-    list-item(dt='Block Height' :dd='num.prettyInt(bc.status.sync_info.latest_block_height)'
+    tm-list-item(dt='Block Height' :dd='num.prettyInt(bc.status.sync_info.latest_block_height)'
       :to="{ name: 'block', params: { block: bc.status.sync_info.latest_block_height} }")
-    list-item(dt='Latest Block Time' :dd='readableDate(bc.status.sync_info.latest_block_time)')
-    list-item(dt='Latest Block Hash' :dd='bc.status.sync_info.latest_block_hash')
+    tm-list-item(dt='Latest Block Time' :dd='readableDate(bc.status.sync_info.latest_block_time)')
+    tm-list-item(dt='Latest Block Hash' :dd='bc.status.sync_info.latest_block_hash')
 
   part(title='Connected Node')
-    list-item(dt='Node Address')
+    tm-list-item(dt='Node Address')
       div(slot="dd"): input#node-input(v-model="bc.url")
-    list-item(dt='Node Moniker' :dd='bc.status.node_info.moniker')
+    tm-list-item(dt='Node Moniker' :dd='bc.status.node_info.moniker')
 </template>
 
 <script>
 import moment from "moment"
 import num from "../scripts/num"
 import { mapGetters } from "vuex"
-import ListItem from "./NiListItem"
+import {TmListItem} from "@tendermint/ui"
 import Page from "./NiPage"
 import Part from "./NiPart"
 export default {
   name: "page-index",
   components: {
-    ListItem,
+    TmListItem,
     Page,
     Part
   },
