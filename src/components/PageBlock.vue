@@ -6,7 +6,7 @@ tm-page(:title="`Block ${block.header.height}`")
     router-link(:to="{ name: 'block', params: { block: block.header.height - 1 }}"): i.material-icons chevron_left
     router-link(:to="{ name: 'block', params: { block: block.header.height + 1 }}"): i.material-icons chevron_right
 
-  part(title='Header')
+  tm-part(title='Header')
     tm-list-item(dt="Chain ID" :dd="block.header.chain_id")
     tm-list-item(dt="Time" :dd="block.header.time")
     tm-list-item(dt="Transactions" :dd="block.header.num_txs")
@@ -14,13 +14,13 @@ tm-page(:title="`Block ${block.header.height}`")
     tm-list-item(dt="Validators Hash" :dd="block.header.validators_hash")
     tm-list-item(dt="App Hash" :dd="block.header.app_hash")
 
-  part(title='Last Block')
+  tm-part(title='Last Block')
     tm-list-item(dt="Hash" :dd="block.header.last_block_id.hash")
     tm-list-item(dt="Parts Total"
       :dd="block.header.last_block_id.parts.total")
     tm-list-item(dt="Parts Hash" :dd="block.header.last_block_id.parts.hash")
 
-  part(title="Precommit"
+  tm-part(title="Precommit"
     v-for="p in block.last_commit.precommits"
     :key="p.validator_address" v-if="p !== null")
     tm-list-item(dt="Address" :dd="p.validator_address")
@@ -29,8 +29,8 @@ tm-page(:title="`Block ${block.header.height}`")
     tm-list-item(:dt="`Sig (${p.signature.type})`"
     :dd="p.signature.data")
 
-  part(title='Transactions')
-  part(v-for="tx in block.data.txs" :title="tx.hash" :key="tx.hash")
+  tm-part(title='Transactions')
+  tm-part(v-for="tx in block.data.txs" :title="tx.hash" :key="tx.hash")
     tm-list-item(v-for="(tx, key) in tx" :key="tx.hash + 'key'" :dt="key" :dd="tx")
 </template>
 
@@ -41,14 +41,13 @@ import createHash from 'create-hash'
 import varint from 'varint'
 import b64 from 'base64-js'
 import ToolBar from './NiToolBar'
-import {TmListItem, TmPage} from '@tendermint/ui'
-import Part from './NiPart'
+import {TmListItem, TmPage, TmPart} from '@tendermint/ui'
 export default {
   name: 'tm-page-block',
   components: {
     ToolBar,
     TmListItem,
-    Part,
+    TmPart,
     TmPage
   },
   computed: {

@@ -1,5 +1,5 @@
 <template lang="pug">
-part.part-validator(:title="'Validator - ' + validator.node_info.moniker")
+tm-part.part-validator(:title="'Validator - ' + validator.node_info.moniker")
   tm-list-item(dt='Location'): div(slot="dd"): .map-img(:style='mapStyle')
   tm-list-item(:dt="currentRate + ' byte/s'")
     div(slot="dd")
@@ -16,13 +16,12 @@ part.part-validator(:title="'Validator - ' + validator.node_info.moniker")
 import shortid from "shortid"
 import { maxBy } from "lodash"
 import num from "../scripts/num"
-import Part from "./NiPart"
-import {TmListItem} from "@tendermint/ui"
+import {TmListItem, TmPart} from "@tendermint/ui"
 export default {
   name: "part-validator",
   components: {
     TmListItem,
-    Part
+    TmPart
   },
   computed: {
     ip() {

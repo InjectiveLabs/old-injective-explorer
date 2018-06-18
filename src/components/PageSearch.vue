@@ -1,6 +1,6 @@
 <template lang="pug">
 tm-page(title='Search')
-  part(title='Search')
+  tm-part(title='Search')
     tm-form-struct(:submit="search")
       tm-form-group
         field#search-input(
@@ -14,7 +14,7 @@ tm-page(title='Search')
         div
         btn(type="submit" icon="search" value="Go")
 
-  part(title='Sample Queries')
+  tm-part(title='Sample Queries')
     // tm-list-item(dt='Address' dd='3HNSiAq7wFDaPsYDcUxNSRMD78qVcYKicw' @click.native="fillField('3HNSiAq7wFDaPsYDcUxNSRMD78qVcYKicw')")
     // tm-list-item(dt='Transaction' dd='878797d16182f6ffa5e98cd88576ab973b8d6f9dfe8ff441bd3521a7d8559800' @click.native="fillField('878797d16182f6ffa5e98cd88576ab973b8d6f9dfe8ff441bd3521a7d8559800')")
     tm-list-item(dt='Block #' dd='1337' @click.native="fillField('1337')")
@@ -24,8 +24,7 @@ tm-page(title='Search')
 import { mapGetters } from 'vuex'
 import Btn from '@nylira/vue-button'
 import Field from '@nylira/vue-field'
-import {TmListItem, TmFormGroup, TmFormStruct, TmPage} from '@tendermint/ui'
-import Part from './NiPart'
+import {TmListItem, TmFormGroup, TmFormStruct, TmPage, TmPart} from '@tendermint/ui'
 export default {
   name: 'page-search',
   components: {
@@ -35,7 +34,7 @@ export default {
     TmFormStruct,
     TmListItem,
     TmPage,
-    Part
+    TmPart
   },
   computed: {
     ...mapGetters(['bc'])

@@ -4,19 +4,18 @@ tm-page(:title="`Validator: ${validator.address}`")
     router-link(to="/validators" exact): i.material-icons arrow_back
     anchor-copy(:value="validator.address" icon="content_copy")
 
-  part(title='ID')
+  tm-part(title='ID')
     ui-list-item(dt="Voting Power" :dd="validator.voting_power")
     ui-list-item(dt="Accum" :dd="validator.accum")
 
-  part(title='Pub Key')
+  tm-part(title='Pub Key')
     ui-list-item(dt="Value" :dd="validator.pub_key.value")
 </template>
 
 <script>
 import { mapGetters } from "vuex"
-import {TmListItem, TmPage} from "@tendermint/ui"
+import {TmListItem, TmPage, TmPart} from "@tendermint/ui"
 import ToolBar from "./NiToolBar"
-import Part from "./NiPart"
 import AnchorCopy from "./AnchorCopy"
 export default {
   name: "page-validator",
@@ -24,7 +23,7 @@ export default {
     AnchorCopy,
     TmListItem,
     TmPage,
-    Part,
+    TmPart,
     ToolBar
   },
   computed: {

@@ -4,21 +4,21 @@ tm-page(:title="`Node: ${getIp(fullNode)}`")
     router-link(to="/nodes" exact): i.material-icons arrow_back
     anchor-copy(:value="fullNode.node_info.id" icon="content_copy")
 
-  part(title='ID')
+  tm-part(title='ID')
     tm-list-item(dt="Moniker" :dd="fullNode.node_info.moniker")
     tm-list-item(dt="IP" :dd="getIp(fullNode)")
     tm-list-item(dt="Start Date" :dd="fullNode.connection_status && readableDate(fullNode.connection_status.SendMonitor.Start)")
 
-  part(title='Pub Key')
+  tm-part(title='Pub Key')
     tm-list-item(dt="Value" :dd="fullNode.node_info.id")
     tm-list-item(dt="Persistent Peer" :dd="persistentPeer")
 
-  part(title='Network')
+  tm-part(title='Network')
     tm-list-item(dt="Network" :dd="fullNode.node_info.network")
     tm-list-item(dt="Tendermint Version" :dd="fullNode.node_info.version")
     tm-list-item(dt="Channels" :dd="fullNode.node_info.channels")
 
-  // part(title='Profile')
+  // tm-part(title='Profile')
     tm-list-item(dt="Total Vote Power" :dd="fullNode.fullNode ? fullNode.fullNode.voting_power : 0 + ' ATOM'" to="/vote-power")
     //tm-list-item(dt="Solo Vote Power" dd="1M ATOM (19%)")
     //tm-list-item(dt="Delg. Vote Power" dd="3.2M ATOM (81%)")
@@ -26,7 +26,7 @@ tm-page(:title="`Node: ${getIp(fullNode)}`")
     //tm-list-item(dt="Proposals" dd="13" to="/proposals")
     //tm-list-item(dt="Slashes" dd="6" to="/slashes")
 
-  //part(title='Staking')
+  //tm-part(title='Staking')
     tm-list-item(dt="Delegators" dd="" to="/delegators")
     tm-list-item(dt="Earn Rate" dd="8.1K ATOM / day'")
     tm-list-item(dt="Total Earnings" dd="301.8K ATOM")
@@ -35,9 +35,8 @@ tm-page(:title="`Node: ${getIp(fullNode)}`")
 <script>
 import moment from "moment"
 import { mapGetters } from "vuex"
-import {TmListItem, TmPage} from "@tendermint/ui"
+import {TmListItem, TmPage, TmPart} from "@tendermint/ui"
 import ToolBar from "./NiToolBar"
-import Part from "./NiPart"
 import AnchorCopy from "./AnchorCopy"
 export default {
   name: "page-fullNode",
@@ -45,7 +44,7 @@ export default {
     AnchorCopy,
     TmListItem,
     TmPage,
-    Part,
+    TmPart,
     ToolBar
   },
   computed: {
