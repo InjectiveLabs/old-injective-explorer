@@ -1,6 +1,6 @@
 <template lang="pug">
 tm-page(:title="`Block ${block.header.height}`")
-  tool-bar
+  tm-tool-bar
     router-link(to="/"): i.material-icons arrow_back
     a(:href="blockUrl" target="_blank") JSON
     router-link(:to="{ name: 'block', params: { block: block.header.height - 1 }}"): i.material-icons chevron_left
@@ -40,12 +40,11 @@ import axios from 'axios'
 import createHash from 'create-hash'
 import varint from 'varint'
 import b64 from 'base64-js'
-import ToolBar from './NiToolBar'
-import {TmListItem, TmPage, TmPart} from '@tendermint/ui'
+import {TmListItem, TmPage, TmPart, TmToolBar} from '@tendermint/ui'
 export default {
   name: 'tm-page-block',
   components: {
-    ToolBar,
+    TmToolBar,
     TmListItem,
     TmPart,
     TmPage
