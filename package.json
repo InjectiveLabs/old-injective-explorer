@@ -18,6 +18,7 @@
     "no-scroll": "^2.1.0",
     "varint": "^5.0.0",
     "vue": "^2.5.16",
+    "vue-analytics": "^5.12.2",
     "vue-router": "^3.0.1",
     "vuelidate": "0.5.0"
   },
