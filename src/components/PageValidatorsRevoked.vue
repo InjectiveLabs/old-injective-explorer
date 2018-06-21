@@ -3,10 +3,10 @@
   list-item(
     v-if="orderedValidators.length > 0"
     v-for="v in orderedValidators"
+    :image="v.avatarUrl"
     :key="v.owner"
     :title="validatorTitle(v)"
     subtitle="WARNING: Validator is Revoked"
-    icon='cancel'
     :to="`/validators/${v.owner}`")
   list-item(v-else title="validators are loading...")
 </template>
