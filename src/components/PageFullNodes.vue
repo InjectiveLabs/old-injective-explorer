@@ -1,7 +1,7 @@
 <template lang="pug">
 page(title='Full Nodes')
   tab-bar
-    router-link(to="/nodes" exact): Total {{ online }}
+    router-link(to="/nodes" exact) Connected Nodes ({{ online }})
     a(@click.prevent='toggleFilter' href="#"): i.material-icons(:class="{'mdi-rotate-180': asc}") filter_list
   // tool-bar
     a(@click='toggleSearch'): i.material-icons search
@@ -36,11 +36,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["fullNodes"]),
+    ...mapGetters(["nodes"]),
     orderedFullNodes() {
-      if (this.fullNodes) {
+      if (this.nodes) {
         return orderBy(
-          this.fullNodes,
+          this.nodes,
           "node_info.moniker",
           this.asc ? "asc" : "desc"
         )
@@ -49,7 +49,7 @@ export default {
       }
     },
     online() {
-      return this.fullNodes.length
+      return this.nodes.length
     }
   },
   methods: {
