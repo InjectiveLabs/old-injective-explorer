@@ -754,8 +754,8 @@
   resolved "https://registry.yarnpkg.com/@nylira/vue-notifications/-/vue-notifications-1.3.0.tgz#90aa05a0acd800054fff7b8e6d62d5c4fcba53db"
 
 "@tendermint/ui@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@tendermint/ui/-/ui-0.2.5.tgz#bf679d6d279bf575f2f25974851fdfddc6f252b2"
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@tendermint/ui/-/ui-0.2.6.tgz#8c173a6abcbddec53bccc75fba05e86f2d467957"
   dependencies:
     cookieconsent "^3.0.6"
     moment "^2.22.2"
