@@ -75,9 +75,10 @@ const actions = {
     commit("setNodes", nodes)
     return Promise.resolve()
   },
-  async getValidators({ state, commit }) {
+  async getValidators({ state, commit, dispatch }) {
     let json = await axios.get(`${state.lcd}/stake/validators`)
     commit("setValidators", json.data)
+    dispatch("updateValidatorAvatars")
     return Promise.resolve()
   },
   async getConsensusState({ state, commit }) {
@@ -90,6 +91,25 @@ const actions = {
     let json = await axios.get(`${state.rpc}/dump_consensus_state`)
     commit("setDumpConsensusState", json.data.result)
     return Promise.resolve()
+  },
+  async updateValidatorAvatars({ state, commit }) {
+    state.validators.map(async validator => {
+      if (validator.description.identity) {
+        let urlPrefix =
+          "https://keybase.io/_/api/1.0/user/lookup.json?key_suffix="
+        let fullUrl = urlPrefix + validator.description.identity
+        let json = await axios.get(fullUrl)
+        if (json.data.status.name === "OK") {
+          let user = json.data.them[0]
+          if (user.pictures && user.pictures.primary) {
+            commit("setValidatorAvatar", {
+              validatorOwner: validator.owner,
+              avatarUrl: user.pictures.primary.url
+            })
+          }
+        }
+      }
+    })
   }
 }
 
@@ -101,7 +121,12 @@ const mutations = {
     state.status = value
   },
   setValidators(state, value) {
-    state.validators = value
+    // add some default ugly avatars
+    let validators = value.map(v => {
+      v.avatarUrl = "http://via.placeholder.com/94/191F24/FFFFFF?text=?"
+      return v
+    })
+    state.validators = validators
   },
   setNodes(state, value) {
     let nodes = value
@@ -111,6 +136,10 @@ const mutations = {
   identifyValidator(state, { address, node_info }) {
     let validator = state.validators.find(v => v.address === address)
     validator.node_info = node_info
+  },
+  setValidatorAvatar(state, { validatorOwner, avatarUrl }) {
+    let validator = state.validators.find(v => v.owner === validatorOwner)
+    validator.avatarUrl = avatarUrl
   },
   setConsensusState(state, value) {
     state.consensusState = value

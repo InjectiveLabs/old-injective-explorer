@@ -7,11 +7,13 @@
   part(title='!!! CRITICAL ALERT !!!' v-if="validator.revoked")
     list-item(title="This validator is revoked!" subtitle="Are you the owner? Go fix it!" type="anchor" href="https://cosmos.network/validators/tutorial/")
 
-  part(title='Validator Description')
-    list-item(dt="Moniker" :dd="validator.description.moniker")
-    list-item(dt="Identity" :dd="validator.description.identity")
-    list-item(dt="Website" :dd="validator.description.website")
-    list-item(dt="Details" :dd="validator.description.details")
+  part#validator-profile(title='Validator Profile')
+    img.avatar(:src="validator.avatarUrl" width="192`" height="192")
+    .list-items
+      list-item(dt="Moniker" :dd="validator.description.moniker")
+      list-item(dt="Identity" :dd="validator.description.identity")
+      list-item(dt="Website" :dd="validator.description.website")
+      list-item(dt="Details" :dd="validator.description.details")
 
   part(title='Validator Keys')
     list-item(dt="Owner" :dd="validator.owner")
@@ -20,6 +22,7 @@
   part(title='Validator Stake' v-if="!validator.revoked")
     list-item(dt="Voting Power" :dd="validator.pool_shares.amount")
     list-item(dt="Bond Height" :dd="`Block ${validator.bond_height}`")
+
 </template>
 
 <script>
@@ -84,3 +87,14 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+@require '../styles/variables.styl'
+
+@media screen and (min-width: 640px)
+  #validator-profile .ni-part-main
+    display flex
+    flex-flow row-reverse nowrap
+    .list-items
+      flex 1
+</style>

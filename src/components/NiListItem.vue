@@ -58,8 +58,19 @@ router-link.ni-li(v-else): .ni-li-container
 
 <script>
 export default {
-  name: 'ni-list-item',
-  props: ['type', 'title', 'subtitle', 'image', 'icon', 'to', 'dt', 'dd', 'label', 'input']
+  name: "ni-list-item",
+  props: [
+    "type",
+    "title",
+    "subtitle",
+    "image",
+    "icon",
+    "to",
+    "dt",
+    "dd",
+    "label",
+    "input"
+  ]
 }
 </script>
 
@@ -90,6 +101,9 @@ export default {
 .ni-li-label
 .ni-li-icon
   height 3rem - px
+  img
+    width 3rem - px
+    height 3rem - px
 
 .ni-li-thumb:empty
   display none
