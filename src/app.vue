@@ -1,5 +1,6 @@
 <template lang="pug">
 #app
+  tm-cookie-consent
   app-header
   #app-content
     #app-main: router-view
@@ -8,14 +9,17 @@
 
 <script>
 import requestInterval from "request-interval"
+import { TmCookieConsent } from "@tendermint/ui"
 import AppFooter from "./components/AppFooter"
 import AppHeader from "./components/AppHeader"
 import store from "./store/index"
+
 export default {
   name: "app",
   components: {
     AppHeader,
-    AppFooter
+    AppFooter,
+    TmCookieConsent
   },
   mounted() {
     requestInterval(1000, () => this.$store.dispatch("getConsensusState"))
