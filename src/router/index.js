@@ -16,7 +16,7 @@ import PageValidator from "../components/PageValidator"
 const routes = [
   { path: "/", component: Index },
   { path: "/search", component: Search },
-  { path: "/block/:block", name: "block", component: Block },
+  { path: "/blocks/:block", name: "block", component: Block },
   { path: "/nodes", component: FullNodes },
   {
     name: "node",
