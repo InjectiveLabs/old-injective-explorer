@@ -3,19 +3,19 @@ page(title='Blockchain')
   part(title='Blockchain')
     list-item(dt='Network' :dd='bc.status.node_info.network')
     list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
-    list-item(dt='Full Nodes' :dd='fullNodes.length')
-    list-item(dt='Validators' :dd='validatorsOnline')
+    list-item(dt='Full Nodes' :dd='nodes.length')
+    list-item(dt='Validators' :dd='validatorsActive')
     list-item(dt='Prevote State' :dd='votingPower')
 
-  part(title='Current Block')
-    list-item(dt='Block Height' :dd='num.prettyInt(bc.status.sync_info.latest_block_height)'
-      :to="{ name: 'block', params: { block: bc.status.sync_info.latest_block_height} }")
-    list-item(dt='Latest Block Time' :dd='readableDate(bc.status.sync_info.latest_block_time)')
-    list-item(dt='Latest Block Hash' :dd='bc.status.sync_info.latest_block_hash')
+  part(title='Current Block' v-if="blocks")
+    list-item(dt='Block Height' :dd='num.prettyInt(blocks[0].header.height)'
+      :to="{ name: 'block', params: { block: blocks[0].header.height }}")
+    list-item(dt='Block Time' :dd='readableDate(blocks[0].header.time)')
+    list-item(dt='Last Block Hash' :dd='blocks[0].header.last_commit_hash')
 
-  part(title='Connected Node')
-    list-item(dt='Node Address')
-      div(slot="dd"): input#node-input(v-model="bc.url")
+  part(title='Connected To')
+    list-item(dt='Node URL')
+      div(slot="dd"): input#node-input(v-model="bc.rpc")
     list-item(dt='Node Moniker' :dd='bc.status.node_info.moniker')
 </template>
 
@@ -23,6 +23,7 @@ page(title='Blockchain')
 import moment from "moment"
 import num from "../scripts/num"
 import { mapGetters } from "vuex"
+import votingValidators from "scripts/votingValidators"
 import ListItem from "./NiListItem"
 import Page from "./NiPage"
 import Part from "./NiPart"
@@ -37,18 +38,24 @@ export default {
     ...mapGetters([
       "bc",
       "config",
-      "fullNodes",
+      "nodes",
       "validators",
-      "consensusState"
+      "consensusState",
+      "blocks"
     ]),
-    validatorsOnline() {
+    validatorsActive() {
       if (this.validators && this.validators.length > 0) {
-        return this.validators.length
+        return this.validatorCount
       }
       if (this.consensusState && this.consensusState.height_vote_set) {
         return "STALLED - need 67% voting power"
       }
       return "Loading..."
+    },
+    validatorCount() {
+      return `${votingValidators(this.validators).length} voting / ${
+        this.validators.length
+      } total`
     },
     votingPower() {
       if (this.consensusState && this.consensusState.height_vote_set) {

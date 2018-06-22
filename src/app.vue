@@ -13,7 +13,6 @@ import { TmCookieConsent } from "@tendermint/ui"
 import AppFooter from "./components/AppFooter"
 import AppHeader from "./components/AppHeader"
 import store from "./store/index"
-
 export default {
   name: "app",
   components: {
@@ -22,11 +21,9 @@ export default {
     TmCookieConsent
   },
   mounted() {
+    this.$store.dispatch("subNewBlock")
+    this.$store.dispatch("subRoundStep")
     requestInterval(1000, () => this.$store.dispatch("getConsensusState"))
-    requestInterval(1000, () => this.$store.dispatch("getStatus"))
-    requestInterval(5000, () => this.$store.dispatch("getNodes"))
-    requestInterval(1000, () => this.$store.dispatch("getValidators"))
-    this.$store.dispatch("getConsensusState")
     this.$store.dispatch("getStatus")
     this.$store.dispatch("getNodes")
     this.$store.dispatch("getValidators")

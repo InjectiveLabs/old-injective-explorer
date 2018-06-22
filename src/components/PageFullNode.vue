@@ -50,10 +50,10 @@ export default {
     ToolBar
   },
   computed: {
-    ...mapGetters(["fullNodes"]),
+    ...mapGetters(["nodes"]),
     fullNode() {
-      if (this.fullNodes && this.fullNodes.length > 0) {
-        return this.fullNodes.find(
+      if (this.nodes && this.nodes.length > 0) {
+        return this.nodes.find(
           v =>
             this.urlsafeIp(v.node_info.listen_addr) ===
             this.$route.params.node + ":46656"

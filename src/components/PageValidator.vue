@@ -1,15 +1,28 @@
 <template lang="pug">
-page(:title="`Validator: ${validator.address}`")
+.validator
   tool-bar
     router-link(to="/validators" exact): i.material-icons arrow_back
     anchor-copy(:value="validator.address" icon="content_copy")
 
-  part(title='ID')
-    list-item(dt="Voting Power" :dd="validator.voting_power")
-    list-item(dt="Accum" :dd="validator.accum")
+  part(title='!!! CRITICAL ALERT !!!' v-if="validator.revoked")
+    list-item(title="This validator is revoked!" subtitle="Are you the owner? Go fix it!" type="anchor" href="https://cosmos.network/validators/tutorial/")
 
-  part(title='Pub Key')
-    list-item(dt="Value" :dd="validator.pub_key.value")
+  part#validator-profile(title='Validator Profile')
+    img.avatar(:src="validator.avatarUrl" width="192`" height="192")
+    .list-items
+      list-item(dt="Moniker" :dd="validator.description.moniker")
+      list-item(dt="Identity" :dd="validator.description.identity")
+      list-item(dt="Website" :dd="validator.description.website")
+      list-item(dt="Details" :dd="validator.description.details")
+
+  part(title='Validator Keys')
+    list-item(dt="Owner" :dd="validator.owner")
+    list-item(dt="Pub Key" :dd="validator.pub_key")
+
+  part(title='Validator Stake' v-if="!validator.revoked")
+    list-item(dt="Voting Power" :dd="validator.pool_shares.amount")
+    list-item(dt="Bond Height" :dd="`Block ${validator.bond_height}`")
+
 </template>
 
 <script>
@@ -33,7 +46,7 @@ export default {
     validator() {
       if (this.validators && this.validators.length > 0) {
         return this.validators.find(
-          v => this.$route.params.validator === v.address
+          v => this.$route.params.validator === v.owner
         )
       } else {
         return this.tmpValidator
@@ -42,10 +55,46 @@ export default {
   },
   data: () => ({
     tmpValidator: {
-      address: "Loading...",
-      voting_power: "0",
-      accum: "0"
+      owner: "Loading...",
+      pubkey: "Loading...",
+      revoked: false,
+      delegator_shares: "Loading...",
+      pool_shares: {
+        status: "Loading...",
+        amount: "Loading..."
+      },
+      description: {
+        moniker: "Loading...",
+        identity: "Loading...",
+        website: "Loading...",
+        details: "Loading..."
+      }
     }
-  })
+  }),
+  methods: {
+    validatorTitle(validator) {
+      let title
+      if (validator.description.moniker) {
+        title = validator.description.moniker
+      } else {
+        title = "Anonymous"
+      }
+      let shortOwner = validator.owner.split(1)[1]
+      shortOwner = shortOwner.slice(0, 8)
+      title += ` - (${shortOwner})`
+      return title
+    }
+  }
 }
 </script>
+
+<style lang="stylus">
+@require '../styles/variables.styl'
+
+@media screen and (min-width: 640px)
+  #validator-profile .ni-part-main
+    display flex
+    flex-flow row-reverse nowrap
+    .list-items
+      flex 1
+</style>
