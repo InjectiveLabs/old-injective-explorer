@@ -6,7 +6,8 @@
     :image="v.avatarUrl"
     :key="v.owner"
     :title="validatorTitle(v)"
-    subtitle="WARNING: Validator is Revoked"
+    subtitle=""
+    :subtitle="`${votingPower(v)} [REVOKED]`"
     :to="`/validators/${v.owner}`")
   list-item(v-else title="validators are loading...")
 </template>
@@ -15,6 +16,7 @@
 import { mapGetters } from "vuex"
 import orderedValidators from "scripts/orderedValidators"
 import validatorTitle from "scripts/validatorTitle"
+import votingPower from "scripts/votingPower"
 import revokedValidators from "scripts/revokedValidators"
 import ListItem from "./NiListItem"
 export default {
@@ -29,7 +31,8 @@ export default {
     }
   },
   data: () => ({
-    validatorTitle: validatorTitle
+    validatorTitle: validatorTitle,
+    votingPower: votingPower
   })
 }
 </script>

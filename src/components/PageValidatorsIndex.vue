@@ -6,7 +6,7 @@
     :image="v.avatarUrl"
     :key="v.owner"
     :title="validatorTitle(v)"
-    :subtitle="`${v.pool_shares.amount} voting power`"
+    :subtitle="votingPower(v)"
     :to="`/validators/${v.owner}`")
   list-item(v-else title="validators are loading...")
 </template>
@@ -15,6 +15,7 @@
 import { mapGetters } from "vuex"
 import orderedValidators from "scripts/orderedValidators"
 import validatorTitle from "scripts/validatorTitle"
+import votingPower from "scripts/votingPower"
 import votingValidators from "scripts/votingValidators"
 import ListItem from "./NiListItem"
 export default {
@@ -29,7 +30,8 @@ export default {
     }
   },
   data: () => ({
-    validatorTitle: validatorTitle
+    validatorTitle: validatorTitle,
+    votingPower: votingPower
   })
 }
 </script>
