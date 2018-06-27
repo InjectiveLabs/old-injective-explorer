@@ -16,38 +16,41 @@ nav#app-header: .container
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import noScroll from 'no-scroll'
-import AppMenu from './AppMenu'
+import { mapGetters } from "vuex"
+import noScroll from "no-scroll"
+import AppMenu from "./AppMenu"
 export default {
-  name: 'app-header',
+  name: "app-header",
   components: {
     AppMenu
   },
   computed: {
-    ...mapGetters(['config'])
+    ...mapGetters(["config"])
   },
   methods: {
-    close () {
-      this.$store.commit('setActiveMenu', '')
+    close() {
+      this.$store.commit("setActiveMenu", "")
       noScroll.off()
     },
-    enableMenu (menuName) {
-      this.$store.commit('setActiveMenu', menuName)
+    enableMenu(menuName) {
+      this.$store.commit("setActiveMenu", menuName)
       noScroll.on()
     },
-    watchWindowSize () {
-      let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+    watchWindowSize() {
+      let w = Math.max(
+        document.documentElement.clientWidth,
+        window.innerWidth || 0
+      )
       if (w >= 1024) {
         this.close()
-        this.$store.commit('SET_CONFIG_DESKTOP', true)
+        this.$store.commit("SET_CONFIG_DESKTOP", true)
         return
       }
-      this.$store.commit('SET_CONFIG_DESKTOP', false)
+      this.$store.commit("SET_CONFIG_DESKTOP", false)
       return
     }
   },
-  mounted () {
+  mounted() {
     this.watchWindowSize()
     window.onresize = this.watchWindowSize
   }
@@ -65,14 +68,14 @@ export default {
     z-index 100
     width 100%
 
-    background app-bg
+    background --app-bg
 
     > .container
       max-width 1024px
       margin 0 auto
       display flex
       flex-flow row nowrap
-      border-bottom 1px solid bc
+      border-bottom 1px solid --bc
       justify-content space-between
 
     .header-item
@@ -96,6 +99,7 @@ export default {
           height 1rem
 
 sidebar-width = 16rem
+
 
 @media screen and (min-width: 1024px)
   #app

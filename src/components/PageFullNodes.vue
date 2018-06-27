@@ -58,10 +58,13 @@ export default {
       // this.$store.commit('notify', { title: 'Searching...', body: 'TODO' })
     },
     urlsafeIp(ip) {
-      return ip.split(".").join("-")
+      return ip && ip.split(".").join("-")
     },
     getIp(fullNode) {
-      return fullNode.node_info.listen_addr.split(":")[0]
+      return (
+        fullNode.node_info.listen_addr &&
+        fullNode.node_info.listen_addr.split(":")[0]
+      )
     }
   }
 }

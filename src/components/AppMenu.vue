@@ -54,9 +54,10 @@ export default {
 @require '../styles/variables.styl'
 
 .app-menu
-  background app-bg-alpha
+  background var(--app-bg-alpha)
   z-index 99
   user-select none
+
 
 @media screen and (max-width:1023px)
   .app-menu
@@ -67,12 +68,13 @@ export default {
     bottom 0
     width 100vw
 
-    background bg-menu
+    background var(--bg-menu)
     user-select none
 
 @media screen and (min-width: 1024px)
   .app-menu
     nav > a
       height 3rem
-      border-bottom 1px solid bc
+      border-bottom 1px solid var(--bc)
+
 </style>

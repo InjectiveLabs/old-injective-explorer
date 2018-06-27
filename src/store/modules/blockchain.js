@@ -2,8 +2,8 @@ import axios from "axios"
 import { RpcClient } from "tendermint"
 
 const state = {
-  rpc: "https://rpc.nylira.net",
-  lcd: "https://lcd.nylira.net",
+  rpc: "https://rpc.technofractal.com",
+  lcd: "https://lcd.technofractal.com",
   status: {
     listen_addr: "",
     sync_info: {
@@ -24,7 +24,7 @@ const state = {
   roundStep: ""
 }
 
-const client = RpcClient("wss://rpc.nylira.net:443")
+const client = RpcClient("wss://rpc.technofractal.com:443")
 
 const actions = {
   subNewBlock({ commit, dispatch }) {

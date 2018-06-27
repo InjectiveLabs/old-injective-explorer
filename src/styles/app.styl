@@ -58,3 +58,47 @@ a
 
 #app-main
   flex 1
+
+// overrides on for temdermint/ui components
+
+.tm-li, .tm-li:last-child
+  border-bottom: 1px solid #303d4b;
+.tm-li.router-link-exact-active .tm-li-icon i.material-icons
+  display none
+.tm-page-header-text
+  padding .75rem 1rem .6875rem
+.tm-page-header-container
+  min-height auto
+.tm-page-header-text h2
+  font-weight 400
+  line-height 24px
+  color #d0dbe7
+.tm-li-thumb, .tm-li-label, .tm-li-icon
+  min-height 2.9375rem
+.tm-page-main
+  padding 0
+.tm-part-main
+  padding-right 0rem
+.tm-part-header
+  margin-top 1rem
+  margin-bottom 0
+  height 2rem
+  padding 0 1rem
+  border-bottom 1px solid var(--bc-dim)
+  background inherit
+.tm-part-header-container
+  height 2rem - px
+.tm-part-title
+.tm-part-menu
+  font-label()
+  color var(--dim)
+  span.dim
+    font-weight --faint
+  a
+    color link
+    border-bottom 1px dotted var(--bc)
+// overrides on tm-part
+@media screen and (min-width: 768px)
+  .tm-part-container
+    &:last-child
+      padding-bottom 0rem

@@ -7,7 +7,7 @@ tm-page(title='Blockchain')
     tm-list-item(dt='Validators' :dd='validatorsActive')
     tm-list-item(dt='Prevote State' :dd='votingPower')
 
-  tm-part(title='Current Block' v-if="blocks")
+  tm-part(title='Current Block' v-if="blocks.length")
     tm-list-item(dt='Block Height' :dd='num.prettyInt(blocks[0].header.height)'
       :to="{ name: 'block', params: { block: blocks[0].header.height }}")
     tm-list-item(dt='Block Time' :dd='readableDate(blocks[0].header.time)')
