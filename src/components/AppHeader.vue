@@ -58,7 +58,8 @@ export default {
 </script>
 
 <style lang="stylus">
-@require '../styles/variables.styl'
+// @require '../styles/variables.styl'
+@import '~variables'
 
 @media screen and (max-width: 1023px)
   #app-header
@@ -68,14 +69,14 @@ export default {
     z-index 100
     width 100%
 
-    background --app-bg
+    background app-bg
 
     > .container
       max-width 1024px
       margin 0 auto
       display flex
       flex-flow row nowrap
-      border-bottom 1px solid --bc
+      border-bottom 1px solid bc
       justify-content space-between
 
     .header-item

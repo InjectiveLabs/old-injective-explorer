@@ -54,10 +54,10 @@ export default {
 @require '../styles/variables.styl'
 
 .app-menu
-  background var(--app-bg-alpha)
+  // background var(--app-bg-alpha)
   z-index 99
   user-select none
-
+  padding-left:0
 
 @media screen and (max-width:1023px)
   .app-menu
@@ -68,7 +68,7 @@ export default {
     bottom 0
     width 100vw
 
-    background var(--bg-menu)
+    // background var(--bg-menu)
     user-select none
 
 @media screen and (min-width: 1024px)

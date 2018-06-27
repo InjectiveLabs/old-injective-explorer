@@ -1,5 +1,4 @@
-flex-version = flex
-@require '../../node_modules/nib/index.styl'
+
 @require 'variables'
 @require 'vendor/*'
 @require 'defaults/*'
@@ -11,11 +10,20 @@ reset-html5()
   box-sizing border-box
 
 html, body, #app
-  background #070b0f url('../assets/images/background-grid.png')
+  background var(--app-bg)
+
+html
+  overflow hidden
 
 a
-  color link
+  color var(--link)
   text-decoration none
+
+  &:hover
+    color var(--hover)
+
+.desktop-only
+  display none
 
 .dont-break-out
   /* These are technically the same, but use both */
@@ -35,70 +43,45 @@ a
   hyphens auto
   */
 
-.desktop-only
-  display none
-
-@media screen and (min-width: 1024px)
- agu .desktop-only
-    display block
-
 #app
   df()
-  color txt
+  color var(--txt)
   padding-top 3rem
-  min-height 100vh
+  height 100vh
+  width 100vw
+  max-width 100% // fixes bug where horizontal scrollbar appears
+  font-weight var(--font-weight, 300) // fixes 300 weight too thin on windows
+
   display flex
   flex-flow column nowrap
+  min-width 0
+
+.tm-field, .tm-field
+  border-radius 2px!important
+  padding 0.5rem !important
+
+input.ni-field
+  height inherit !important
+
+.ni-select .ni-field-select-addon
+  height 100% !important
 
 #app-content
   flex 1
   display flex
-  flex-flow column nowrap
-  margin-top -3rem
+  flex-flow column no-wrap
 
-#app-main
-  flex 1
+#app-header
+  background var(--app-fg)
 
-// overrides on for temdermint/ui components
+@media screen and (min-width: 1024px)
+  #app
+    padding-top 0
+    flex-flow row nowrap
 
-.tm-li, .tm-li:last-child
-  border-bottom: 1px solid #303d4b;
-.tm-li.router-link-exact-active .tm-li-icon i.material-icons
-  display none
-.tm-page-header-text
-  padding .75rem 1rem .6875rem
-.tm-page-header-container
-  min-height auto
-.tm-page-header-text h2
-  font-weight 400
-  line-height 24px
-  color #d0dbe7
-.tm-li-thumb, .tm-li-label, .tm-li-icon
-  min-height 2.9375rem
-.tm-page-main
-  padding 0
-.tm-part-main
-  padding-right 0rem
-.tm-part-header
-  margin-top 1rem
-  margin-bottom 0
-  height 2rem
-  padding 0 1rem
-  border-bottom 1px solid var(--bc-dim)
-  background inherit
-.tm-part-header-container
-  height 2rem - px
-.tm-part-title
-.tm-part-menu
-  font-label()
-  color var(--dim)
-  span.dim
-    font-weight --faint
-  a
-    color link
-    border-bottom 1px dotted var(--bc)
-// overrides on tm-part
-@media screen and (min-width: 768px)
-  .tm-part-container
-    &:last-child
-      padding-bottom 0rem
+  #app-content
+    display flex
+    min-width 0
+
+ .desktop-only
+    display inline
