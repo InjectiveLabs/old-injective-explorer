@@ -1,30 +1,19 @@
 <template lang="pug">
 tm-page(title='Validators')
   tm-tab-bar
-    router-link(to="/validators" exact) Total: {{ online }}
-    a(@click.prevent='toggleFilter' href="#"): i.material-icons(:class="{'mdi-rotate-180': asc}") filter_list
-  // tm-tool-bar
-    a(@click='toggleSearch'): i.material-icons search
-    a(@click='toggleSearch'): i.material-icons search
-  tm-list-item(
-    v-for="v in validators"
-    :key="v.address"
-    :title="v.address"
-    :subtitle="`${v.voting_power}steak (${v.accum} accum)`"
-    icon='storage'
-    :to="`/validators/${v.address}`")
+    router-link(to="/validators" exact) Voting Validators ({{ votingValidators.length }})
+    router-link(to="/validators/revoked" exact) Revoked Validators ({{ revokedValidators.length }})
+  router-view
 </template>
 
 <script>
 import { mapGetters } from "vuex"
-import {TmListItem, TmPage, TmTabBar, TmToolBar} from "@tendermint/ui"
+import { TmPage, TmTabBar } from "@tendermint/ui"
 export default {
   name: "page-validators",
   components: {
-    TmListItem,
     TmPage,
-    TmTabBar,
-    TmToolBar
+    TmTabBar
   },
   data() {
     return {
@@ -33,8 +22,15 @@ export default {
   },
   computed: {
     ...mapGetters(["validators"]),
-    online() {
-      return this.validators.length
+    votingValidators() {
+      if (this.validators && this.validators.length > 1) {
+        return this.validators.filter(v => !v.revoked)
+      } else {
+        return []
+      }
+    },
+    revokedValidators() {
+      return this.validators.filter(v => v.revoked)
     }
   },
   methods: {
@@ -44,18 +40,6 @@ export default {
     },
     toggleSearch() {
       // this.$store.commit('notify', { title: 'Searching...', body: 'TODO' })
-    },
-    urlsafeIp(ip) {
-      return ip.split(".").join("-")
-    },
-    getIp(validator) {
-      return validator.node_info.listen_addr.split(":")[0]
-    },
-    getTitle(v) {
-      return (
-        v.node_info.moniker +
-        (v.validator ? " — " + v.validator.voting_power : " — 0")
-      )
     }
   }
 }

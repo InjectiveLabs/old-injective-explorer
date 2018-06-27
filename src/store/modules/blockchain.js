@@ -1,7 +1,9 @@
 import axios from "axios"
+import { RpcClient } from "tendermint"
 
 const state = {
-  url: "https://nylira.net",
+  rpc: "https://rpc.nylira.net",
+  lcd: "https://lcd.nylira.net",
   status: {
     listen_addr: "",
     sync_info: {
@@ -14,57 +16,157 @@ const state = {
       moniker: null
     }
   },
-  fullNodes: [],
+  nodes: [],
   validators: [],
-  consensusState: {}
+  consensusState: {},
+  dumpConsensusState: {},
+  blocks: [],
+  roundStep: ""
 }
 
+const client = RpcClient("wss://rpc.nylira.net:443")
+
 const actions = {
-  async getConsensusState({ state, commit }) {
-    let json = await axios.get(`${state.url}/consensus_state`)
-    commit("setConsensusState", json.data.result.round_state)
+  subNewBlock({ commit, dispatch }) {
+    client.subscribe({ query: "tm.event = 'NewBlock'" }, event => {
+      commit("addBlock", event.block)
+      // check for new nodes every 10 blocks
+      if (event.block.header.height % 10 === 0) {
+        dispatch("getNodes")
+        dispatch("getValidators")
+      }
+    })
   },
-  async getStatus({ state, commit }) {
-    let json = await axios.get(`${state.url}/status`)
-    commit("setStatus", json.data.result)
+  subRoundStep({ commit, dispatch }) {
+    let eventName = "NewRoundStep"
+    client.subscribe({ query: `tm.event = '${eventName}'` }, event => {
+      let stepName = event.step
+      let step
+      switch (stepName) {
+        case "RoundStepPropose":
+          step = 0
+          dispatch("getDumpConsensusState")
+          break
+        case "RoundStepPrevote":
+          step = 1
+          break
+        case "RoundStepPrecommit":
+          step = 2
+          break
+        case "RoundStepCommit":
+          step = 3
+          break
+        case "RoundStepNewHeight":
+          step = 4
+          break
+      }
+      commit("setRoundStep", step)
+    })
   },
-  async getNodes({ state, commit }) {
-    let json = await axios.get(`${state.url}/net_info`)
-    let peers = json.data.result.peers
-    commit("setFullNodes", peers)
+  async getStatus({ commit }) {
+    let json = await axios.get(`${state.rpc}/status`)
+    let status = json.data.result
+    commit("setStatus", status)
     return Promise.resolve()
   },
-  async getValidators({ state, commit }) {
-    let json = await axios.get(`${state.url}/validators`)
-    if (json.data.result && json.data.result.validators) {
-      commit("setValidators", json.data.result.validators)
-      return Promise.resolve()
-    } else {
-      console.log("no validators found")
-    }
+  async getNodes({ state, commit }) {
+    let json = await axios.get(`${state.rpc}/net_info`)
+    let nodes = json.data.result.peers
+    commit("setNodes", nodes)
+    return Promise.resolve()
+  },
+  async getValidators({ state, commit, dispatch }) {
+    let json = await axios.get(`${state.lcd}/stake/validators`)
+    commit("setValidators", json.data)
+    dispatch("updateValidatorAvatars")
+    return Promise.resolve()
+  },
+  async getConsensusState({ state, commit }) {
+    let json = await axios.get(`${state.rpc}/consensus_state`)
+    let consensusState = json.data.result.round_state
+    commit("setConsensusState", consensusState)
+    return Promise.resolve()
+  },
+  async getDumpConsensusState({ state, commit }) {
+    let json = await axios.get(`${state.rpc}/dump_consensus_state`)
+    commit("setDumpConsensusState", json.data.result)
+    return Promise.resolve()
+  },
+  async updateValidatorAvatars({ state, commit }) {
+    state.validators.map(async validator => {
+      if (validator.description.identity) {
+        let urlPrefix =
+          "https://keybase.io/_/api/1.0/user/lookup.json?key_suffix="
+        let fullUrl = urlPrefix + validator.description.identity
+        let json = await axios.get(fullUrl)
+        if (json.data.status.name === "OK") {
+          let user = json.data.them[0]
+          if (user.pictures && user.pictures.primary) {
+            commit("setValidatorAvatar", {
+              validatorOwner: validator.owner,
+              avatarUrl: user.pictures.primary.url
+            })
+          }
+        }
+      }
+    })
   }
 }
 
 const mutations = {
   setUrl(state, value) {
-    state.url = value
-  },
-  setConsensusState(state, value) {
-    state.consensusState = value
+    state.rpc = value
   },
   setStatus(state, value) {
     state.status = value
   },
   setValidators(state, value) {
-    state.validators = value
+    // add some default ugly avatars
+    let validators = value.map(v => {
+      v.avatarUrl = "http://via.placeholder.com/94/191F24/FFFFFF?text=?"
+      return v
+    })
+    state.validators = validators
   },
-  setFullNodes(state, value) {
+  setNodes(state, value) {
     let nodes = value
     nodes.push(state.status)
-    state.fullNodes = nodes
+    state.nodes = nodes
   },
-  setValidator(state, { validator, key }) {
-    state.validators[key] = validator
+  identifyValidator(state, { address, node_info }) {
+    let validator = state.validators.find(v => v.address === address)
+    validator.node_info = node_info
+  },
+  setValidatorAvatar(state, { validatorOwner, avatarUrl }) {
+    let validator = state.validators.find(v => v.owner === validatorOwner)
+    validator.avatarUrl = avatarUrl
+  },
+  setConsensusState(state, value) {
+    state.consensusState = value
+  },
+  setDumpConsensusState(state, value) {
+    state.dumpConsensusState = value
+  },
+  setProposer(state, address) {
+    let proposer = state.validators.find(v => v.address === address)
+    if (proposer) {
+      proposer.isProposer = true
+      state.validators.map(v => {
+        if (v.address !== address) {
+          v.isProposer = false
+        }
+      })
+    }
+  },
+  addBlock(state, block) {
+    state.blocks.unshift(block)
+    const maxBlocks = 100
+    if (state.blocks.length > maxBlocks) {
+      state.blocks = state.blocks.slice(0, maxBlocks)
+    }
+  },
+  setRoundStep(state, step) {
+    state.roundStep = step
   }
 }
 

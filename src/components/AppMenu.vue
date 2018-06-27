@@ -3,8 +3,8 @@ menu.app-menu
   tm-part(title='Network Explorer')
 
     tm-list-item(to="/" exact @click.native="close" title="Blockchain")
-    tm-list-item(to="/nodes" exact @click.native="close" :title="`Full Nodes (${fullNodes.length})`" v-bind:class="{ 'active': isValidatorPage }")
-    tm-list-item(to="/validators" exact @click.native="close" :title="`Validators (${validators.length})`" v-bind:class="{ 'active': isValidatorPage }")
+    tm-list-item(to="/nodes" exact @click.native="close" :title="`Full Nodes (${nodes.length})`")
+    tm-list-item(to="/validators" @click.native="close" :title="`Validators (${validatorCount})`" v-bind:class="{ 'active': isValidatorPage }")
     tm-list-item(to="/search" exact @click.native="close" title="Search")
 
   tm-part(title='Learn More')
@@ -12,14 +12,15 @@ menu.app-menu
     tm-list-item(type="anchor" href="https://cosmos.network/validators/tutorial" @click.native="close" title="Join the testnet" subtitle="run a full node" target="_blank")
     tm-list-item(type="anchor" href="https://faucetcosmos.network" @click.native="close" title="Get testnet tokens" subtitle="100% free" target="_blank")
     tm-list-item(type="anchor" href="https://riot.im/app/#/room/#cosmos_validators:matrix.org" @click.native="close" title="Join validator chat" subtitle="#cosmos-validators" target="_blank")
-    tm-list-item(type="anchor" href="http://validators.resilient.zone/gaia-5/" @click.native="close" title="resilient.zone" subtitle="more validator stats" target="_blank")
+    tm-list-item(type="anchor" href="http://validators.resilient.zone/gaia-6002" @click.native="close" title="resilient.zone" subtitle="more validator stats" target="_blank")
     tm-list-item(type="anchor" href="https://cosmos.network" @click.native="close" title="cosmos.network" subtitle="official website" target="_blank")
 </template>
 
 <script>
 import { mapGetters } from "vuex"
 import noScroll from "no-scroll"
-import {TmListItem, TmPart} from "@tendermint/ui"
+import votingValidators from "scripts/votingValidators"
+import { TmListItem, TmPart } from "@tendermint/ui"
 export default {
   name: "app-menu",
   components: {
@@ -27,12 +28,17 @@ export default {
     TmPart
   },
   computed: {
-    ...mapGetters(["proposals", "fullNodes", "validators"]),
+    ...mapGetters(["proposals", "nodes", "validators"]),
     proposalAlerts() {
       return this.proposals.filter(p => p.flags.read === false).length
     },
     isValidatorPage() {
       return this.$route.params.validator
+    },
+    validatorCount() {
+      return `${votingValidators(this.validators).length}/${
+        this.validators.length
+      }`
     }
   },
   methods: {

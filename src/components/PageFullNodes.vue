@@ -1,7 +1,7 @@
 <template lang="pug">
 tm-page(title='Full Nodes')
   tm-tab-bar
-    router-link(to="/nodes" exact): Total {{ online }}
+    router-link(to="/nodes" exact) Connected Nodes ({{ online }})
     a(@click.prevent='toggleFilter' href="#"): i.material-icons(:class="{'mdi-rotate-180': asc}") filter_list
   // tm-tool-bar
     a(@click='toggleSearch'): i.material-icons search
@@ -18,7 +18,7 @@ tm-page(title='Full Nodes')
 <script>
 import { mapGetters } from "vuex"
 import { orderBy } from "lodash"
-import {TmListItem, TmPage, TmTabBar, TmToolBar} from "@tendermint/ui"
+import { TmListItem, TmPage, TmTabBar, TmToolBar } from "@tendermint/ui"
 export default {
   name: "page-nodes",
   components: {
@@ -33,11 +33,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["fullNodes"]),
+    ...mapGetters(["nodes"]),
     orderedFullNodes() {
-      if (this.fullNodes) {
+      if (this.nodes) {
         return orderBy(
-          this.fullNodes,
+          this.nodes,
           "node_info.moniker",
           this.asc ? "asc" : "desc"
         )
@@ -46,7 +46,7 @@ export default {
       }
     },
     online() {
-      return this.fullNodes.length
+      return this.nodes.length
     }
   },
   methods: {

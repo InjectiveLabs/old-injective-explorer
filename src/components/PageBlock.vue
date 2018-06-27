@@ -35,14 +35,14 @@ tm-page(:title="`Block ${block.header.height}`")
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import axios from 'axios'
-import createHash from 'create-hash'
-import varint from 'varint'
-import b64 from 'base64-js'
-import {TmListItem, TmPage, TmPart, TmToolBar} from '@tendermint/ui'
+import { mapGetters } from "vuex"
+import axios from "axios"
+import createHash from "create-hash"
+import varint from "varint"
+import b64 from "base64-js"
+import { TmListItem, TmPage, TmPart, TmToolBar } from "@tendermint/ui"
 export default {
-  name: 'tm-page-block',
+  name: "page-block",
   components: {
     TmToolBar,
     TmListItem,
@@ -50,97 +50,97 @@ export default {
     TmPage
   },
   computed: {
-    ...mapGetters(['bc'])
+    ...mapGetters(["blockchain"])
   },
   data: () => ({
-    blockUrl: '',
+    blockUrl: "",
     block_meta: {
       block_id: {
-        hash: '',
+        hash: "",
         parts: {
           total: 0,
-          hash: ''
+          hash: ""
         }
       },
       header: {
-        chain_id: '',
+        chain_id: "",
         height: 0,
-        time: '',
+        time: "",
         num_txs: 0,
         last_block_id: {
-          hash: '',
+          hash: "",
           parts: {
             total: 0,
-            hash: ''
+            hash: ""
           }
         },
-        last_commit_hash: '',
-        data_hash: '',
-        validators_hash: '',
-        app_hash: ''
+        last_commit_hash: "",
+        data_hash: "",
+        validators_hash: "",
+        app_hash: ""
       }
     },
     block: {
       header: {
-        chain_id: '',
+        chain_id: "",
         height: 0,
-        time: '',
+        time: "",
         num_txs: 0,
         last_block_id: {
-          hash: '',
+          hash: "",
           parts: {
             total: 0,
-            hash: ''
+            hash: ""
           }
         },
-        last_commit_hash: '',
-        data_hash: '',
-        validators_hash: '',
-        app_hash: ''
+        last_commit_hash: "",
+        data_hash: "",
+        validators_hash: "",
+        app_hash: ""
       },
       data: {
         txs: []
       },
       last_commit: {
         blockID: {
-          hash: '',
+          hash: "",
           parts: {
             total: 0,
-            hash: ''
+            hash: ""
           }
         },
         precommits: [
           {
-            validator_address: '',
+            validator_address: "",
             validator_index: 0,
             height: 0,
             round: 0,
             type: 0,
             block_id: {
-              hash: '',
+              hash: "",
               parts: {
                 total: 0,
-                hash: ''
+                hash: ""
               }
             },
-            signature: [0, '']
+            signature: [0, ""]
           }
         ]
       }
     }
   }),
   methods: {
-    async fetchBlock () {
-      let url = `${this.bc.url}/block?height=${this.$route.params.block}`
+    async fetchBlock() {
+      let url = `${this.blockchain.lcd}/blocks/${this.$route.params.block}`
       let json = await axios.get(url)
-      this.block_meta = json.data.result.block_meta
-      this.block = json.data.result.block
-      this.block.data.txs && this.queryTxs().catch((err) => console.log(err))
+      this.block_meta = json.data.block_meta
+      this.block = json.data.block
+      this.block.data.txs && this.queryTxs().catch(err => console.log(err))
     },
-    queryTxs () {
+    queryTxs() {
       return this.queryTx(this.block.data.txs.length)
     },
-    queryTx (len, key = 0) {
+    queryTx(len, key = 0) {
       return new Promise((resolve, reject) => {
         if (key >= len) resolve()
         let txstring = atob(this.block.data.txs[key])
@@ -153,24 +153,31 @@ export default {
         tmp.set(new Uint8Array(varintlen), 0)
         tmp.set(new Uint8Array(txbytes), varintlen.byteLength)
         // console.log(tmp)
-        let hash = createHash('ripemd160').update(Buffer.from(tmp)).digest('hex')
+        let hash = createHash("ripemd160")
+          .update(Buffer.from(tmp))
+          .digest("hex")
         // console.log(hash)
-        let url = `${this.bc.url}/tx?hash=0x${hash}`
-        axios.get(url).then(json => {
-          // console.log(json)
-          json.data.result.string = txstring
-          this.block.data.txs.splice(key, 1, json.data.result)
-          this.queryTx(len, key + 1).then(resolve).catch(reject)
-        }).catch(reject)
+        let url = `${this.blockchain.lcd}/tx?hash=0x${hash}`
+        axios
+          .get(url)
+          .then(json => {
+            // console.log(json)
+            json.data.result.string = txstring
+            this.block.data.txs.splice(key, 1, json.data.result)
+            this.queryTx(len, key + 1)
+              .then(resolve)
+              .catch(reject)
+          })
+          .catch(reject)
       })
     }
   },
-  async mounted () {
+  async mounted() {
     await this.fetchBlock()
   },
   watch: {
     // eslint-disable-next-line
-    '$route' (to, from) {
+    $route(to, from) {
       this.fetchBlock()
     }
   }

@@ -8,24 +8,43 @@ import Search from "../components/PageSearch"
 import Block from "../components/PageBlock"
 import FullNodes from "../components/PageFullNodes"
 import FullNode from "../components/PageFullNode"
-import Validators from "../components/PageValidators"
-import Validator from "../components/PageValidator"
+import PageValidators from "../components/PageValidators"
+import PageValidatorsIndex from "../components/PageValidatorsIndex"
+import PageValidatorsRevoked from "../components/PageValidatorsRevoked"
+import PageValidator from "../components/PageValidator"
 
 const routes = [
   { path: "/", component: Index },
   { path: "/search", component: Search },
-  { path: "/block/:block", name: "block", component: Block },
+  { path: "/blocks/:block", name: "block", component: Block },
   { path: "/nodes", component: FullNodes },
   {
     name: "node",
     path: "/nodes/:node",
     component: FullNode
   },
-  { path: "/validators", component: Validators },
+
+  // VALIDATORS
   {
-    name: "validator",
-    path: "/validators/:validator",
-    component: Validator
+    path: "/validators",
+    component: PageValidators,
+    children: [
+      {
+        path: "/",
+        name: "validators",
+        component: PageValidatorsIndex
+      },
+      {
+        path: "revoked",
+        name: "validators-revoked",
+        component: PageValidatorsRevoked
+      },
+      {
+        path: ":validator",
+        name: "validator",
+        component: PageValidator
+      }
+    ]
   }
 ]
 

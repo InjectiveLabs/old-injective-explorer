@@ -3,19 +3,19 @@ tm-page(title='Blockchain')
   tm-part(title='Blockchain')
     tm-list-item(dt='Network' :dd='bc.status.node_info.network')
     tm-list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
-    tm-list-item(dt='Full Nodes' :dd='fullNodes.length')
-    tm-list-item(dt='Validators' :dd='validatorsOnline')
+    tm-list-item(dt='Full Nodes' :dd='nodes.length')
+    tm-list-item(dt='Validators' :dd='validatorsActive')
     tm-list-item(dt='Prevote State' :dd='votingPower')
 
-  tm-part(title='Current Block')
-    tm-list-item(dt='Block Height' :dd='num.prettyInt(bc.status.sync_info.latest_block_height)'
-      :to="{ name: 'block', params: { block: bc.status.sync_info.latest_block_height} }")
-    tm-list-item(dt='Latest Block Time' :dd='readableDate(bc.status.sync_info.latest_block_time)')
-    tm-list-item(dt='Latest Block Hash' :dd='bc.status.sync_info.latest_block_hash')
+  tm-part(title='Current Block' v-if="blocks")
+    tm-list-item(dt='Block Height' :dd='num.prettyInt(blocks[0].header.height)'
+      :to="{ name: 'block', params: { block: blocks[0].header.height }}")
+    tm-list-item(dt='Block Time' :dd='readableDate(blocks[0].header.time)')
+    tm-list-item(dt='Last Block Hash' :dd='blocks[0].header.last_commit_hash')
 
-  tm-part(title='Connected Node')
-    tm-list-item(dt='Node Address')
-      div(slot="dd"): input#node-input(v-model="bc.url")
+  tm-part(title='Connected To')
+    tm-list-item(dt='Node URL')
+      div(slot="dd"): input#node-input(v-model="bc.rpc")
     tm-list-item(dt='Node Moniker' :dd='bc.status.node_info.moniker')
 </template>
 
@@ -23,7 +23,9 @@ tm-page(title='Blockchain')
 import moment from "moment"
 import num from "../scripts/num"
 import { mapGetters } from "vuex"
-import {TmListItem, TmPage, TmPart} from "@tendermint/ui"
+import votingValidators from "scripts/votingValidators"
+import { TmListItem, TmPage, TmPart } from "@tendermint/ui"
+
 export default {
   name: "page-index",
   components: {
@@ -35,18 +37,24 @@ export default {
     ...mapGetters([
       "bc",
       "config",
-      "fullNodes",
+      "nodes",
       "validators",
-      "consensusState"
+      "consensusState",
+      "blocks"
     ]),
-    validatorsOnline() {
+    validatorsActive() {
       if (this.validators && this.validators.length > 0) {
-        return this.validators.length
+        return this.validatorCount
       }
       if (this.consensusState && this.consensusState.height_vote_set) {
         return "STALLED - need 67% voting power"
       }
       return "Loading..."
+    },
+    validatorCount() {
+      return `${votingValidators(this.validators).length} voting / ${
+        this.validators.length
+      } total`
     },
     votingPower() {
       if (this.consensusState && this.consensusState.height_vote_set) {
