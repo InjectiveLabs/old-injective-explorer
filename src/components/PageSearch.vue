@@ -3,7 +3,7 @@ tm-page(title='Search')
   tm-part(title='Search')
     tm-form-struct(:submit="search")
       tm-form-group
-        field#search-input(
+        tm-field#search-input(
           type="text"
           placeholder="Search for block"
           required
@@ -12,7 +12,7 @@ tm-page(title='Search')
           title="1 to 60 characters")
       div(slot="footer")
         div
-        btn(type="submit" icon="search" value="Go")
+        tm-btn(type="submit" icon="search" value="Go")
 
   tm-part(title='Sample Queries')
     // tm-list-item(dt='Address' dd='3HNSiAq7wFDaPsYDcUxNSRMD78qVcYKicw' @click.native="fillField('3HNSiAq7wFDaPsYDcUxNSRMD78qVcYKicw')")
@@ -21,15 +21,21 @@ tm-page(title='Search')
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Btn from '@nylira/vue-button'
-import Field from '@nylira/vue-field'
-import {TmListItem, TmFormGroup, TmFormStruct, TmPage, TmPart} from '@tendermint/ui'
+import { mapGetters } from "vuex"
+import {
+  TmListItem,
+  TmFormGroup,
+  TmFormStruct,
+  TmPage,
+  TmPart,
+  TmBtn,
+  TmField
+} from "@tendermint/ui"
 export default {
-  name: 'page-search',
+  name: "page-search",
   components: {
-    Btn,
-    Field,
+    TmBtn,
+    TmField,
     TmFormGroup,
     TmFormStruct,
     TmListItem,
@@ -37,20 +43,20 @@ export default {
     TmPart
   },
   computed: {
-    ...mapGetters(['bc'])
+    ...mapGetters(["bc"])
   },
   data: () => ({
-    query: ''
+    query: ""
   }),
   methods: {
-    fillField (value) {
+    fillField(value) {
       this.query = value
     },
-    search () {
+    search() {
       if (parseInt(this.query)) {
-        this.$router.push({ name: 'block', params: { block: this.query } })
+        this.$router.push({ name: "block", params: { block: this.query } })
       } else {
-        console.log('Only block # queries are supported right now', this.query)
+        console.log("Only block # queries are supported right now", this.query)
       }
     }
   }
