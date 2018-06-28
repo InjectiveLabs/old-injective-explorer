@@ -1,6 +1,6 @@
 <template lang="pug">
 tm-page(:title="`Block ${block.header.height}`")
-  tm-tool-bar
+  div(slot="menu"): tm-tool-bar
     router-link(to="/"): i.material-icons arrow_back
     a(:href="blockUrl" target="_blank") JSON
     router-link(:to="{ name: 'block', params: { block: block.header.height - 1 }}"): i.material-icons chevron_left

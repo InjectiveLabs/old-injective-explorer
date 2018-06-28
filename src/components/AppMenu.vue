@@ -1,7 +1,6 @@
 <template lang="pug">
 menu.app-menu
-  tm-part(title='Network Explorer')
-
+  .app-menu-main
     tm-list-item(to="/" exact @click.native="close" title="Blockchain")
     tm-list-item(to="/nodes" exact @click.native="close" :title="`Full Nodes (${nodes.length})`")
     tm-list-item(to="/validators" @click.native="close" :title="`Validators (${validatorCount})`" v-bind:class="{ 'active': isValidatorPage }")
@@ -54,27 +53,32 @@ export default {
 @require '../styles/variables.styl'
 
 .app-menu
-  // background var(--app-bg-alpha)
-  z-index 99
+  background var(--app-fg)
+  z-index z(appMenu)
   user-select none
-  padding-left:0
+  display flex
+  flex-flow column nowrap
 
+  .app-menu-main
+    flex 1
+    position relative // for perfect-scrollbar
+
+    .tm-li
+      border-bottom 1px solid var(--bc-dim)
+  .tm-part-main
+    padding 0
 @media screen and (max-width:1023px)
   .app-menu
-    height 100vh
     position fixed
     top 3rem
     left 0
     bottom 0
     width 100vw
-
-    // background var(--bg-menu)
+    background var(--app-bg)
     user-select none
 
 @media screen and (min-width: 1024px)
   .app-menu
-    nav > a
-      height 3rem
-      border-bottom 1px solid var(--bc)
+    flex 1
 
 </style>

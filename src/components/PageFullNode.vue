@@ -1,6 +1,6 @@
 <template lang="pug">
 tm-page(:title="`Node: ${getIp(fullNode)}`")
-  tm-tool-bar
+  div(slot="menu"): tm-tool-bar
     router-link(to="/nodes" exact): i.material-icons arrow_back
     anchor-copy(:value="fullNode.node_info.id" icon="content_copy")
 
@@ -35,7 +35,7 @@ tm-page(:title="`Node: ${getIp(fullNode)}`")
 <script>
 import moment from "moment"
 import { mapGetters } from "vuex"
-import {TmListItem, TmPage, TmPart, TmToolBar} from "@tendermint/ui"
+import { TmListItem, TmPage, TmPart, TmToolBar } from "@tendermint/ui"
 import AnchorCopy from "./AnchorCopy"
 export default {
   name: "page-fullNode",

@@ -6,7 +6,8 @@ nav#app-header: .container
     .header-item(v-else @click="enableMenu('app')"): i.material-icons menu
 
   router-link.header-item.header-item-logo(to="/")
-    img(src="../assets/images/cosmos.png")
+    img(src="../assets/images/cosmos-wordmark-white.svg")
+
   app-menu(v-if="config.activeMenu === 'app' || config.desktop")
 
   template(v-if="!config.desktop")
@@ -118,15 +119,14 @@ sidebar-width = 16rem
 
     > .container
       flex 1
-
+      display: flex;
+      flex-flow: column nowrap;
     .header-item-logo
-      height 3rem
-      border-bottom 1px solid bc
-      display flex
-      align-items center
-      padding 0 1rem
+      padding: 1.25rem 1rem 1rem 1rem;
+      line-height: normal;
+      border-bottom: 0.0625rem solid var(--bc);
       img
-        height 1.25rem
+        height 1.75rem
 
   #app-content
     min-height 100vh

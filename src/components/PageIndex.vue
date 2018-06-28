@@ -15,7 +15,11 @@ tm-page(title='Blockchain')
 
   tm-part(title='Connected To')
     tm-list-item(dt='Node URL')
-      div(slot="dd"): input#node-input(v-model="bc.rpc")
+      div(slot="dd")
+        tm-field#node-input(
+          type="text"
+          
+          v-model="bc.rpc")
     tm-list-item(dt='Node Moniker' :dd='bc.status.node_info.moniker')
 </template>
 
@@ -24,14 +28,15 @@ import moment from "moment"
 import num from "../scripts/num"
 import { mapGetters } from "vuex"
 import votingValidators from "scripts/votingValidators"
-import { TmListItem, TmPage, TmPart } from "@tendermint/ui"
+import { TmListItem, TmPage, TmPart, TmField } from "@tendermint/ui"
 
 export default {
   name: "page-index",
   components: {
     TmListItem,
     TmPage,
-    TmPart
+    TmPart,
+    TmField
   },
   computed: {
     ...mapGetters([
