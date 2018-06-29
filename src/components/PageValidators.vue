@@ -1,6 +1,6 @@
 <template lang="pug">
-page(title='Validators')
-  tab-bar
+tm-page(title='Validators')
+  tm-tab-bar
     router-link(to="/validators" exact) Voting Validators ({{ votingValidators.length }})
     router-link(to="/validators/revoked" exact) Revoked Validators ({{ revokedValidators.length }})
   router-view
@@ -8,15 +8,12 @@ page(title='Validators')
 
 <script>
 import { mapGetters } from "vuex"
-import Page from "./NiPage"
-import TabBar from "./NiTabBar"
-import ToolBar from "./NiToolBar"
+import { TmPage, TmTabBar } from "@tendermint/ui"
 export default {
   name: "page-validators",
   components: {
-    Page,
-    TabBar,
-    ToolBar
+    TmPage,
+    TmTabBar
   },
   data() {
     return {

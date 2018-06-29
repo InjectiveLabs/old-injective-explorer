@@ -1,45 +1,42 @@
 <template lang="pug">
 .validator
-  tool-bar
+  tm-tool-bar
     router-link(to="/validators" exact): i.material-icons arrow_back
     anchor-copy(:value="validator.address" icon="content_copy")
 
-  part(title='!!! CRITICAL ALERT !!!' v-if="validator.revoked")
-    list-item(title="This validator is revoked!" subtitle="Are you the owner? Go fix it!" type="anchor" href="https://cosmos.network/validators/tutorial/")
+  tm-part(title='!!! CRITICAL ALERT !!!' v-if="validator.revoked")
+    tm-list-item(title="This validator is revoked!" subtitle="Are you the owner? Go fix it!" type="anchor" href="https://cosmos.network/validators/tutorial/")
 
-  part#validator-profile(title='Validator Profile')
+  tm-part#validator-profile(title='Validator Profile')
     img.avatar(:src="validator.avatarUrl" width="192`" height="192")
     .list-items
-      list-item(dt="Moniker" :dd="validator.description.moniker")
-      list-item(dt="Identity" :dd="validator.description.identity")
-      list-item(dt="Website" :dd="validator.description.website")
-      list-item(dt="Details" :dd="validator.description.details")
+      tm-list-item(dt="Moniker" :dd="validator.description.moniker")
+      tm-list-item(dt="Identity" :dd="validator.description.identity")
+      tm-list-item(dt="Website" :dd="validator.description.website")
+      tm-list-item(dt="Details" :dd="validator.description.details")
 
-  part(title='Validator Keys')
-    list-item(dt="Owner" :dd="validator.owner")
-    list-item(dt="Pub Key" :dd="validator.pub_key")
+  tm-part(title='Validator Keys')
+    tm-list-item(dt="Owner" :dd="validator.owner")
+    tm-list-item(dt="Pub Key" :dd="validator.pub_key")
 
-  part(title='Validator Stake' v-if="!validator.revoked")
-    list-item(dt="Voting Power" :dd="validator.pool_shares.amount")
-    list-item(dt="Bond Height" :dd="`Block ${validator.bond_height}`")
+  tm-part(title='Validator Stake' v-if="!validator.revoked")
+    tm-list-item(dt="Voting Power" :dd="validator.pool_shares.amount")
+    tm-list-item(dt="Bond Height" :dd="`Block ${validator.bond_height}`")
 
 </template>
 
 <script>
 import { mapGetters } from "vuex"
-import ListItem from "./NiListItem"
-import ToolBar from "./NiToolBar"
-import Page from "./NiPage"
-import Part from "./NiPart"
+import { TmListItem, TmPage, TmPart, TmToolBar } from "@tendermint/ui"
 import AnchorCopy from "./AnchorCopy"
 export default {
   name: "page-validator",
   components: {
     AnchorCopy,
-    ListItem,
-    Page,
-    Part,
-    ToolBar
+    TmListItem,
+    TmPage,
+    TmPart,
+    TmToolBar
   },
   computed: {
     ...mapGetters(["validators"]),
@@ -92,7 +89,7 @@ export default {
 @require '../styles/variables.styl'
 
 @media screen and (min-width: 640px)
-  #validator-profile .ni-part-main
+  #validator-profile .tm-part-main
     display flex
     flex-flow row-reverse nowrap
     .list-items

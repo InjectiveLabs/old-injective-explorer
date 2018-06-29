@@ -1,22 +1,25 @@
 <template lang="pug">
-page(title='Blockchain')
-  part(title='Blockchain')
-    list-item(dt='Network' :dd='bc.status.node_info.network')
-    list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
-    list-item(dt='Full Nodes' :dd='nodes.length')
-    list-item(dt='Validators' :dd='validatorsActive')
-    list-item(dt='Prevote State' :dd='votingPower')
+tm-page(title='Blockchain')
+  tm-part(title='Blockchain')
+    tm-list-item(dt='Network' :dd='bc.status.node_info.network')
+    tm-list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
+    tm-list-item(dt='Full Nodes' :dd='nodes.length')
+    tm-list-item(dt='Validators' :dd='validatorsActive')
+    tm-list-item(dt='Prevote State' :dd='votingPower' v-if="blocks[0].header.height < 2")
 
-  part(title='Current Block' v-if="blocks")
-    list-item(dt='Block Height' :dd='num.prettyInt(blocks[0].header.height)'
+  tm-part(title='Current Block' v-if="blocks.length")
+    tm-list-item(dt='Block Height' :dd='num.prettyInt(blocks[0].header.height)'
       :to="{ name: 'block', params: { block: blocks[0].header.height }}")
-    list-item(dt='Block Time' :dd='readableDate(blocks[0].header.time)')
-    list-item(dt='Last Block Hash' :dd='blocks[0].header.last_commit_hash')
+    tm-list-item(dt='Block Time' :dd='readableDate(blocks[0].header.time)')
+    tm-list-item(dt='Last Block Hash' :dd='blocks[0].header.last_commit_hash')
 
-  part(title='Connected To')
-    list-item(dt='Node URL')
-      div(slot="dd"): input#node-input(v-model="bc.rpc")
-    list-item(dt='Node Moniker' :dd='bc.status.node_info.moniker')
+  tm-part(title='Connected To')
+    tm-list-item(dt='Node URL')
+      div(slot="dd")
+        tm-field#node-input(
+          type="text"
+          v-model="bc.rpc")
+    tm-list-item(dt='Node Moniker' :dd='bc.status.node_info.moniker')
 </template>
 
 <script>
@@ -24,15 +27,15 @@ import moment from "moment"
 import num from "../scripts/num"
 import { mapGetters } from "vuex"
 import votingValidators from "scripts/votingValidators"
-import ListItem from "./NiListItem"
-import Page from "./NiPage"
-import Part from "./NiPart"
+import { TmListItem, TmPage, TmPart, TmField } from "@tendermint/ui"
+
 export default {
   name: "page-index",
   components: {
-    ListItem,
-    Page,
-    Part
+    TmListItem,
+    TmPage,
+    TmPart,
+    TmField
   },
   computed: {
     ...mapGetters([

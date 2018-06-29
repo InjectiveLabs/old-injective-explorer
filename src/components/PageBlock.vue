@@ -1,37 +1,37 @@
 <template lang="pug">
-page(:title="`Block ${block.header.height}`")
-  tool-bar
+tm-page(:title="`Block ${block.header.height}`")
+  div(slot="menu"): tm-tool-bar
     router-link(to="/"): i.material-icons arrow_back
     a(:href="blockUrl" target="_blank") JSON
     router-link(:to="{ name: 'block', params: { block: block.header.height - 1 }}"): i.material-icons chevron_left
     router-link(:to="{ name: 'block', params: { block: block.header.height + 1 }}"): i.material-icons chevron_right
 
-  part(title='Header')
-    list-item(dt="Chain ID" :dd="block.header.chain_id")
-    list-item(dt="Time" :dd="block.header.time")
-    list-item(dt="Transactions" :dd="block.header.num_txs")
-    list-item(dt="Last Commit Hash" :dd="block.header.last_commit_hash")
-    list-item(dt="Validators Hash" :dd="block.header.validators_hash")
-    list-item(dt="App Hash" :dd="block.header.app_hash")
+  tm-part(title='Header')
+    tm-list-item(dt="Chain ID" :dd="block.header.chain_id")
+    tm-list-item(dt="Time" :dd="block.header.time")
+    tm-list-item(dt="Transactions" :dd="block.header.num_txs")
+    tm-list-item(dt="Last Commit Hash" :dd="block.header.last_commit_hash")
+    tm-list-item(dt="Validators Hash" :dd="block.header.validators_hash")
+    tm-list-item(dt="App Hash" :dd="block.header.app_hash")
 
-  part(title='Last Block')
-    list-item(dt="Hash" :dd="block.header.last_block_id.hash")
-    list-item(dt="Parts Total"
+  tm-part(title='Last Block')
+    tm-list-item(dt="Hash" :dd="block.header.last_block_id.hash")
+    tm-list-item(dt="Parts Total"
       :dd="block.header.last_block_id.parts.total")
-    list-item(dt="Parts Hash" :dd="block.header.last_block_id.parts.hash")
+    tm-list-item(dt="Parts Hash" :dd="block.header.last_block_id.parts.hash")
 
-  part(title="Precommit"
+  tm-part(title="Precommit"
     v-for="p in block.last_commit.precommits"
     :key="p.validator_address" v-if="p !== null")
-    list-item(dt="Address" :dd="p.validator_address")
-    list-item(dt="Index" :dd="p.validator_index")
-    list-item(dt="Round" :dd="p.round")
-    list-item(:dt="`Sig (${p.signature.type})`"
+    tm-list-item(dt="Address" :dd="p.validator_address")
+    tm-list-item(dt="Index" :dd="p.validator_index")
+    tm-list-item(dt="Round" :dd="p.round")
+    tm-list-item(:dt="`Sig (${p.signature.type})`"
     :dd="p.signature.data")
 
-  part(title='Transactions')
-  part(v-for="tx in block.data.txs" :title="tx.hash" :key="tx.hash")
-    list-item(v-for="(tx, key) in tx" :key="tx.hash + 'key'" :dt="key" :dd="tx")
+  tm-part(title='Transactions')
+  tm-part(v-for="tx in block.data.txs" :title="tx.hash" :key="tx.hash")
+    tm-list-item(v-for="(tx, key) in tx" :key="tx.hash + 'key'" :dt="key" :dd="tx")
 </template>
 
 <script>
@@ -40,17 +40,14 @@ import axios from "axios"
 import createHash from "create-hash"
 import varint from "varint"
 import b64 from "base64-js"
-import ToolBar from "./NiToolBar"
-import ListItem from "./NiListItem"
-import Part from "./NiPart"
-import Page from "./NiPage"
+import { TmListItem, TmPage, TmPart, TmToolBar } from "@tendermint/ui"
 export default {
   name: "page-block",
   components: {
-    ToolBar,
-    ListItem,
-    Part,
-    Page
+    TmToolBar,
+    TmListItem,
+    TmPart,
+    TmPage
   },
   computed: {
     ...mapGetters(["blockchain"])

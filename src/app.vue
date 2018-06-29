@@ -3,7 +3,7 @@
   tm-cookie-consent
   app-header
   #app-content
-    #app-main: router-view
+    router-view
     app-footer
 </template>
 

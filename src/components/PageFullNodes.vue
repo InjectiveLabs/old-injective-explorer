@@ -1,12 +1,12 @@
 <template lang="pug">
-page(title='Full Nodes')
-  tab-bar
+tm-page(title='Full Nodes')
+  tm-tab-bar
     router-link(to="/nodes" exact) Connected Nodes ({{ online }})
     a(@click.prevent='toggleFilter' href="#"): i.material-icons(:class="{'mdi-rotate-180': asc}") filter_list
-  // tool-bar
+  // tm-tool-bar
     a(@click='toggleSearch'): i.material-icons search
     a(@click='toggleSearch'): i.material-icons search
-  list-item(
+  tm-list-item(
     v-for="i in orderedFullNodes"
     :key="i.node_info.listen_addr"
     :title="i.node_info.moniker"
@@ -18,17 +18,14 @@ page(title='Full Nodes')
 <script>
 import { mapGetters } from "vuex"
 import { orderBy } from "lodash"
-import ListItem from "./NiListItem"
-import Page from "./NiPage"
-import TabBar from "./NiTabBar"
-import ToolBar from "./NiToolBar"
+import { TmListItem, TmPage, TmTabBar, TmToolBar } from "@tendermint/ui"
 export default {
   name: "page-nodes",
   components: {
-    ListItem,
-    Page,
-    TabBar,
-    ToolBar
+    TmListItem,
+    TmPage,
+    TmTabBar,
+    TmToolBar
   },
   data() {
     return {
@@ -61,10 +58,13 @@ export default {
       // this.$store.commit('notify', { title: 'Searching...', body: 'TODO' })
     },
     urlsafeIp(ip) {
-      return ip.split(".").join("-")
+      return ip && ip.split(".").join("-")
     },
     getIp(fullNode) {
-      return fullNode.node_info.listen_addr.split(":")[0]
+      return (
+        fullNode.node_info.listen_addr &&
+        fullNode.node_info.listen_addr.split(":")[0]
+      )
     }
   }
 }

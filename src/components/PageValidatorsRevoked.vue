@@ -1,6 +1,6 @@
 <template lang="pug">
 .validators
-  list-item(
+  tm-list-item(
     v-if="orderedValidators.length > 0"
     v-for="v in orderedValidators"
     :image="v.avatarUrl"
@@ -18,11 +18,11 @@ import orderedValidators from "scripts/orderedValidators"
 import validatorTitle from "scripts/validatorTitle"
 import votingPower from "scripts/votingPower"
 import revokedValidators from "scripts/revokedValidators"
-import ListItem from "./NiListItem"
+import { TmListItem } from "@tendermint/ui"
 export default {
   name: "page-validators",
   components: {
-    ListItem
+    TmListItem
   },
   computed: {
     ...mapGetters(["validators"]),
