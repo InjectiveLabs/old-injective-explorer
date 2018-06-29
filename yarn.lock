@@ -729,9 +729,9 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.0.tgz#50c1e2260ac0ed9439a181de3725a0168d59c48a"
 
-"@tendermint/ui@^0.2.8":
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/@tendermint/ui/-/ui-0.2.8.tgz#06298b53a91bcfca7eb5ef4d80e8f1a609e85750"
+"@tendermint/ui@^0.2.9":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@tendermint/ui/-/ui-0.2.9.tgz#a6c775df822653321269b3176faa67aefcda1834"
   dependencies:
     cookieconsent "^3.0.6"
     moment "^2.22.2"
