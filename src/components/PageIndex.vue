@@ -5,7 +5,7 @@ tm-page(title='Blockchain')
     tm-list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
     tm-list-item(dt='Full Nodes' :dd='nodes.length')
     tm-list-item(dt='Validators' :dd='validatorsActive')
-    tm-list-item(dt='Prevote State' :dd='votingPower')
+    tm-list-item(dt='Prevote State' :dd='votingPower' v-if="blocks[0].header.height < 2")
 
   tm-part(title='Current Block' v-if="blocks.length")
     tm-list-item(dt='Block Height' :dd='num.prettyInt(blocks[0].header.height)'
@@ -18,7 +18,6 @@ tm-page(title='Blockchain')
       div(slot="dd")
         tm-field#node-input(
           type="text"
-          
           v-model="bc.rpc")
     tm-list-item(dt='Node Moniker' :dd='bc.status.node_info.moniker')
 </template>
