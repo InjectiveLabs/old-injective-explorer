@@ -34,6 +34,7 @@ export default {
   },
   computed: {
     ...mapGetters(["nodes"]),
+    /*
     orderedFullNodes() {
       if (this.nodes) {
         return orderBy(
@@ -41,6 +42,14 @@ export default {
           "node_info.moniker",
           this.asc ? "asc" : "desc"
         )
+      } else {
+        return []
+      }
+   },
+   */
+    orderedFullNodes() {
+      if (this.nodes) {
+        return orderBy(this.nodes, n => n.node_info.moniker.toLowerCase())
       } else {
         return []
       }
