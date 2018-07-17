@@ -1,5 +1,7 @@
 export default function(validator) {
-  let power = validator.pool_shares.amount
+  let string = ""
+
+  let power = validator.tokens
   if (power.includes("/")) {
     let divisor = parseInt(power.split("/")[0])
     let dividend = parseInt(power.split("/")[1])
@@ -9,5 +11,11 @@ export default function(validator) {
       power = Math.round((divisor / dividend) * 100) / 100
     }
   }
-  return power + " voting power"
+  string += power + " voting power"
+
+  let shortOwner = validator.owner.split(1)[1]
+  shortOwner = shortOwner.slice(0, 8)
+  string += ` (${shortOwner})`
+
+  return string
 }
