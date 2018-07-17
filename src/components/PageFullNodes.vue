@@ -1,9 +1,9 @@
 <template lang="pug">
 tm-page(title='Full Nodes')
-  tm-tab-bar
+  // tm-tab-bar
     router-link(to="/nodes" exact) Connected Nodes ({{ online }})
-    // a(@click.prevent='toggleFilter'): i.material-icons(:class="{'mdi-rotate-180': asc}") filter_list
-    // a(@click='toggleSearch'): i.material-icons search
+    a(@click.prevent='toggleFilter'): i.material-icons(:class="{'mdi-rotate-180': asc}") filter_list
+    a(@click='toggleSearch'): i.material-icons search
   tm-list-item(
     v-for="i in orderedFullNodes"
     :key="i.node_info.listen_addr"

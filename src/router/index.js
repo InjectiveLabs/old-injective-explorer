@@ -45,6 +45,13 @@ const routes = [
         component: PageValidator
       }
     ]
+  },
+
+  // REVOKED
+  {
+    path: "/validators-revoked",
+    name: "validators-revoked",
+    component: PageValidatorsRevoked
   }
 ]
 

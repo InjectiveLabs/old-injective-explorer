@@ -8,14 +8,15 @@
 
 <script>
 export default {
-  name: 'app-footer'
+  name: "app-footer"
 }
 </script>
 
 <style lang="stylus">
-@require '../styles/variables.styl'
+@require '~variables'
 
 .app-footer
+  display none
   .container
     border-top 1px solid bc-dim
     height 3rem

@@ -1,8 +1,5 @@
 <template lang="pug">
 tm-page(title='Revoked Validators')
-  tm-tab-bar
-    router-link(to="/validators" exact) Voting Validators ({{ votingValidators.length }})
-    router-link(to="/validators/revoked" exact) Revoked Validators ({{ revokedValidators.length }})
   tm-list-item(
     v-if="orderedValidators.length > 0"
     v-for="v in orderedValidators"
@@ -20,13 +17,12 @@ import orderedValidators from "scripts/orderedValidators"
 import validatorTitle from "scripts/validatorTitle"
 import votingPower from "scripts/votingPower"
 import revokedValidators from "scripts/revokedValidators"
-import { TmListItem, TmPage, TmTabBar } from "@tendermint/ui"
+import { TmListItem, TmPage } from "@tendermint/ui"
 export default {
   name: "page-validators-revoked",
   components: {
     TmListItem,
-    TmPage,
-    TmTabBar
+    TmPage
   },
   computed: {
     ...mapGetters(["validators"]),
