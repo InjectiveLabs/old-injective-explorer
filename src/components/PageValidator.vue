@@ -1,6 +1,6 @@
 <template lang="pug">
-.validator
-  tm-tool-bar
+tm-page(title='Validator')
+  div(slot="menu"): tm-tool-bar
     router-link(to="/validators" exact): i.material-icons arrow_back
     anchor-copy(:value="validator.address" icon="content_copy")
 
@@ -20,9 +20,8 @@
     tm-list-item(dt="Pub Key" :dd="validator.pub_key")
 
   tm-part(title='Validator Stake' v-if="!validator.revoked")
-    tm-list-item(dt="Voting Power" :dd="validator.pool_shares.amount")
+    tm-list-item(dt="Voting Power" :dd="validator.tokens")
     tm-list-item(dt="Bond Height" :dd="`Block ${validator.bond_height}`")
-
 </template>
 
 <script>
@@ -55,11 +54,8 @@ export default {
       owner: "Loading...",
       pubkey: "Loading...",
       revoked: false,
+      tokens: "Loading...",
       delegator_shares: "Loading...",
-      pool_shares: {
-        status: "Loading...",
-        amount: "Loading..."
-      },
       description: {
         moniker: "Loading...",
         identity: "Loading...",
