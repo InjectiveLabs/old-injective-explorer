@@ -20,12 +20,16 @@ tm-page(title='Testnet Explorer')
     tm-list-item(dt='Last Block Hash' dd='N/A')
 
   tm-part(title='Connected To')
-    tm-list-item(dt='Node URL')
+    tm-list-item(dt='RPC Endpoint')
       div(slot="dd")
-        tm-field#node-input(
+        tm-field.node-input(
           type="text"
           v-model="bc.rpc")
-    tm-list-item(dt='Node Moniker' :dd='bc.status.node_info.moniker')
+    tm-list-item(dt='LCD Endpoint')
+      div(slot="dd")
+        tm-field.node-input(
+          type="text"
+          v-model="bc.lcd")
 </template>
 
 <script>
@@ -133,11 +137,10 @@ export default {
 <style lang='stylus'>
 @require '~variables'
 
-input#node-input
+.tm-field.node-input
   min-width 20rem
   height 2rem
   padding 0 0.5rem
   background transparent
   df()
-  #f00
 </style
