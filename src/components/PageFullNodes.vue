@@ -36,7 +36,7 @@ export default {
       if (this.nodes) {
         return orderBy(
           this.nodes,
-          n => n.node_info.moniker.toLowerCase(),
+          [n => n.node_info.moniker.toLowerCase()],
           this.asc ? "asc" : "desc"
         )
       } else {
