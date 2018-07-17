@@ -11,7 +11,8 @@ tm-page(title='Validator')
     img.avatar(:src="validator.avatarUrl" width="192`" height="192")
     .list-items
       tm-list-item(dt="Moniker" :dd="validator.description.moniker")
-      tm-list-item(dt="Identity" :dd="validator.description.identity")
+      tm-list-item(v-if="validator.description.identity" dt="Identity" :dd="validator.description.identity")
+      tm-list-item(v-else dt="Identity" dd="add your avatar" href="https://github.com/cosmos/cosmos-sdk/blob/develop/cmd/gaia/testnets/README.md#edit-validator-description" target="_blank")
       tm-list-item(dt="Website" :dd="validator.description.website")
       tm-list-item(dt="Details" :dd="validator.description.details")
 

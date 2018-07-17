@@ -6,13 +6,11 @@ menu.app-menu
     tm-list-item(to="/validators" @click.native="close" :title="`Validators (${validatorCount})`" v-bind:class="{ 'active': isValidatorPage }")
     tm-list-item(to="/search" exact @click.native="close" title="Search")
 
-  tm-part(title='Learn More')
-
-    tm-list-item(type="anchor" href="https://cosmos.network/validators/tutorial" @click.native="close" title="Join the testnet" subtitle="run a full node" target="_blank")
-    tm-list-item(type="anchor" href="https://faucetcosmos.network" @click.native="close" title="Get testnet tokens" subtitle="100% free" target="_blank")
-    tm-list-item(type="anchor" href="https://riot.im/app/#/room/#cosmos_validators:matrix.org" @click.native="close" title="Join validator chat" subtitle="#cosmos-validators" target="_blank")
-    tm-list-item(type="anchor" href="http://validators.resilient.zone/gaia-6002" @click.native="close" title="resilient.zone" subtitle="more validator stats" target="_blank")
-    tm-list-item(type="anchor" href="https://cosmos.network" @click.native="close" title="cosmos.network" subtitle="official website" target="_blank")
+  tm-part(title='Testnet Information')
+    tm-list-item(type="anchor" href="https://riot.im/app/#/room/#cosmos_validators:matrix.org" @click.native="close" title="Validator Chat" subtitle="#cosmos-validators" target="_blank")
+    tm-list-item(type="anchor" href="https://github.com/cosmos/cosmos-sdk/blob/develop/cmd/gaia/testnets/README.md" @click.native="close" title="Join Testnet" subtitle="run a full node/validator" target="_blank")
+    tm-list-item(type="anchor" href="https://faucetcosmos.network" @click.native="close" title="Steak Faucet" subtitle="vegan artisanal steak" target="_blank")
+    tm-list-item(type="anchor" href="https://cosmos.network" @click.native="close" title="Cosmos Network" subtitle="cosmos.network" target="_blank")
 </template>
 
 <script>
