@@ -3,7 +3,7 @@ tm-page(title='Testnet Explorer')
   tm-part(title='Testnet Data')
     tm-list-item(dt='Testnet Version' :dd='bc.status.node_info.network')
     // tm-list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
-    tm-list-item(dt='Status' :dd='validatorsActive')
+    tm-list-item(dt='Status' :dd='validatorsActive' :href="`${bc.rpc}/consensus_state`" target="_blank")
     tm-list-item(dt='Prevote State' :dd='prevotes')
     tm-list-item(dt='Precommit State' :dd='precommits')
 
@@ -68,7 +68,7 @@ export default {
         return this.validatorCount
       }
       if (this.consensusState && this.consensusState.height_vote_set) {
-        return "STALLED - need 67% voting power online"
+        return "STALLED"
       }
       return "Loading..."
     },
