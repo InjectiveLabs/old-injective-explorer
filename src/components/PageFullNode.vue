@@ -2,7 +2,7 @@
 tm-page(:title="`Node: ${getIp(fullNode)}`")
   div(slot="menu"): tm-tool-bar
     router-link(to="/nodes" exact): i.material-icons arrow_back
-    anchor-copy(:value="fullNode.node_info.id" icon="content_copy")
+    anchor-copy(:value="persistentPeer" icon="content_copy")
 
   tm-part(title='ID')
     tm-list-item(dt="Moniker" :dd="fullNode.node_info.moniker")
@@ -53,7 +53,7 @@ export default {
         return this.nodes.find(
           v =>
             this.urlsafeIp(v.node_info.listen_addr) ===
-            this.$route.params.node + ":46656"
+            this.$route.params.node + ":26656"
         )
       } else {
         return this.tmpFullNode
