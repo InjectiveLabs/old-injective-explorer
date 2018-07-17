@@ -16,7 +16,7 @@ tm-part.part-validator(:title="'Validator - ' + validator.node_info.moniker")
 import shortid from "shortid"
 import { maxBy } from "lodash"
 import num from "../scripts/num"
-import {TmListItem, TmPart} from "@tendermint/ui"
+import { TmListItem, TmPart } from "@tendermint/ui"
 export default {
   name: "part-validator",
   components: {
@@ -28,7 +28,7 @@ export default {
       return this.validator.node_info.remote_addr.split(":")[0]
     },
     url() {
-      return `http://${this.ip}:46657`
+      return `http://${this.ip}:26657`
     },
     currentRate() {
       return this.validator.connection_status.SendMonitor.CurRate
