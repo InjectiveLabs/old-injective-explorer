@@ -2,8 +2,8 @@ import axios from "axios"
 import { RpcClient } from "tendermint"
 
 const state = {
-  rpc: "https://rpc.technofractal.com",
-  lcd: "https://lcd.technofractal.com",
+  rpc: "https://rpc.nylira.net",
+  lcd: "https://lcd.nylira.net",
   status: {
     listen_addr: "",
     sync_info: {
@@ -24,7 +24,7 @@ const state = {
   roundStep: ""
 }
 
-const client = RpcClient("wss://rpc.technofractal.com:443")
+const client = RpcClient("wss://rpc.nylira.net:443")
 
 const actions = {
   subNewBlock({ commit, dispatch }) {
@@ -121,12 +121,14 @@ const mutations = {
     state.status = value
   },
   setValidators(state, value) {
-    // add some default ugly avatars
-    let validators = value.map(v => {
-      v.avatarUrl = "http://via.placeholder.com/94/191F24/FFFFFF?text=?"
-      return v
-    })
-    state.validators = validators
+    if (value) {
+      // add some default ugly avatars
+      let validators = value.map(v => {
+        v.avatarUrl = "http://via.placeholder.com/94/191F24/FFFFFF?text=?"
+        return v
+      })
+      state.validators = validators
+    }
   },
   setNodes(state, value) {
     let nodes = value

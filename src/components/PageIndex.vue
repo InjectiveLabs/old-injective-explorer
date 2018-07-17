@@ -1,17 +1,23 @@
 <template lang="pug">
-tm-page(title='Blockchain')
-  tm-part(title='Blockchain')
-    tm-list-item(dt='Network' :dd='bc.status.node_info.network')
-    tm-list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
-    tm-list-item(dt='Full Nodes' :dd='nodes.length')
-    tm-list-item(dt='Validators' :dd='validatorsActive')
-    tm-list-item(dt='Prevote State' :dd='votingPower' v-if="blocks[0].header.height < 2")
+tm-page(title='Testnet Explorer')
+  tm-part(title='Testnet Data')
+    tm-list-item(dt='Testnet Version' :dd='bc.status.node_info.network')
+    // tm-list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')
+    tm-list-item(dt='Status' :dd='validatorsActive')
+    tm-list-item(dt='Prevote State' :dd='prevotes')
+    tm-list-item(dt='Precommit State' :dd='precommits')
 
-  tm-part(title='Current Block' v-if="blocks.length")
-    tm-list-item(dt='Block Height' :dd='num.prettyInt(blocks[0].header.height)'
-      :to="{ name: 'block', params: { block: blocks[0].header.height }}")
-    tm-list-item(dt='Block Time' :dd='readableDate(blocks[0].header.time)')
-    tm-list-item(dt='Last Block Hash' :dd='blocks[0].header.last_commit_hash')
+  tm-part(title='Current Block' v-if="latestBlock.height > 0")
+    tm-list-item(dt='Block Height' :dd='num.prettyInt(latestBlock.height)'
+      :to="{ name: 'block', params: { block: latestBlock.height }}")
+    tm-list-item(dt='Block Time' :dd='readableDate(latestBlock.time)')
+    tm-list-item(dt='Last Block Hash' :dd='latestBlock.last_commit_hash')
+
+  tm-part(title='Current Block' v-else)
+    tm-list-item(dt='Block Height' :dd='num.prettyInt(latestBlock.height)'
+      :to="{ name: 'block', params: { block: latestBlock.height }}")
+    tm-list-item(dt='Block Time' dd='No blocks yet')
+    tm-list-item(dt='Last Block Hash' dd='N/A')
 
   tm-part(title='Connected To')
     tm-list-item(dt='Node URL')
@@ -46,12 +52,23 @@ export default {
       "consensusState",
       "blocks"
     ]),
+    latestBlock() {
+      if (this.blocks && this.blocks.length >= 1) {
+        return this.blocks[0].header
+      } else {
+        return {
+          height: 0,
+          time: "",
+          commit_hash: ""
+        }
+      }
+    },
     validatorsActive() {
       if (this.validators && this.validators.length > 0) {
         return this.validatorCount
       }
       if (this.consensusState && this.consensusState.height_vote_set) {
-        return "STALLED - need 67% voting power"
+        return "STALLED - need 67% voting power online"
       }
       return "Loading..."
     },
@@ -60,7 +77,7 @@ export default {
         this.validators.length
       } total`
     },
-    votingPower() {
+    prevotes() {
       if (this.consensusState && this.consensusState.height_vote_set) {
         let prevotes = this.consensusState.height_vote_set[0].prevotes_bit_array
         let split = prevotes.split(" ")
@@ -72,6 +89,24 @@ export default {
         } else {
           return `${split[3] *
             100}% prevoted (${onlineSteak}steak, need ${minimumSteak}steak)`
+        }
+      }
+      return "Loading..."
+    },
+    precommits() {
+      if (this.consensusState && this.consensusState.height_vote_set) {
+        let precommits = this.consensusState.height_vote_set[0]
+          .precommits_bit_array
+        let split = precommits.split(" ")
+        let onlineSteak = split[1].split("/")[0]
+        let totalSteak = split[1].split("/")[1]
+        let minimumSteak = Math.round(totalSteak * 0.6667)
+        if (onlineSteak >= minimumSteak) {
+          return `${Math.round(split[3] * 100)}% precommitted`
+        } else {
+          return `${Math.round(
+            split[3] * 100
+          )}% precommitted (${onlineSteak}steak, need ${minimumSteak}steak)`
         }
       }
       return "Loading..."
