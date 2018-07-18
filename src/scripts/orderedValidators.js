@@ -1,7 +1,7 @@
 import { orderBy } from "lodash"
 export default function(validators) {
-  let validatorsWithAvatars = []
-  let validatorsWithoutAvatars = []
+  // let validatorsWithAvatars = []
+  // let validatorsWithoutAvatars = []
   let orderedValidators = []
   if (validators && validators.length > 1) {
     orderedValidators = orderBy(
