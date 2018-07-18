@@ -10,7 +10,7 @@ menu.app-menu
   tm-part(title='Testnet Information')
     tm-list-item(type="anchor" href="https://riot.im/app/#/room/#cosmos_validators:matrix.org" @click.native="close" title="Validator Chat" subtitle="#cosmos-validators" target="_blank")
     tm-list-item(type="anchor" href="https://github.com/cosmos/cosmos-sdk/blob/develop/cmd/gaia/testnets/README.md" @click.native="close" title="Join Testnet" subtitle="run a full node/validator" target="_blank")
-    tm-list-item(type="anchor" href="https://faucetcosmos.network" @click.native="close" title="Steak Faucet" subtitle="vegan artisanal steak" target="_blank")
+    tm-list-item(type="anchor" href="https://gaia.faucetcosmos.network" @click.native="close" title="Steak Faucet" subtitle="vegan artisanal steak" target="_blank")
     tm-list-item(type="anchor" href="https://cosmos.network" @click.native="close" title="Cosmos Network" subtitle="cosmos.network" target="_blank")
 </template>
 
