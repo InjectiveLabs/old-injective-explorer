@@ -2,7 +2,7 @@ import axios from "axios"
 import { RpcClient } from "tendermint"
 
 const state = {
-  rpc: "https://gaia-7000-seeds.interblock.io",
+  rpc: "https://rpc.nylira.net",
   lcd: "https://lcd.nylira.net",
   status: {
     listen_addr: "",
