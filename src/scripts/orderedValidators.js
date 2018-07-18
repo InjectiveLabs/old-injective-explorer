@@ -9,6 +9,7 @@ export default function(validators) {
       [i => i.description.moniker.toLowerCase()],
       "asc"
     )
+    /*
     validatorsWithAvatars = orderedValidators.filter(
       v => (v = v.description.identity)
     )
@@ -16,6 +17,7 @@ export default function(validators) {
       v => (v = !v.description.identity)
     )
     orderedValidators = validatorsWithAvatars.concat(validatorsWithoutAvatars)
+    */
   }
   return orderedValidators
 }
