@@ -1,4 +1,4 @@
-import { orderBy } from "lodash"
+import { shuffle, orderBy } from "lodash"
 export default function(validators) {
   // let validatorsWithAvatars = []
   // let validatorsWithoutAvatars = []
@@ -19,5 +19,5 @@ export default function(validators) {
     orderedValidators = validatorsWithAvatars.concat(validatorsWithoutAvatars)
     */
   }
-  return orderedValidators
+  return shuffle(orderedValidators)
 }
