@@ -35,11 +35,6 @@ const routes = [
         component: PageValidatorsIndex
       },
       {
-        path: "revoked",
-        name: "validators-revoked",
-        component: PageValidatorsRevoked
-      },
-      {
         path: ":validator",
         name: "validator",
         component: PageValidator

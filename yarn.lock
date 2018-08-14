@@ -729,9 +729,9 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.0.tgz#50c1e2260ac0ed9439a181de3725a0168d59c48a"
 
-"@tendermint/ui@0.2.12":
-  version "0.2.12"
-  resolved "https://registry.yarnpkg.com/@tendermint/ui/-/ui-0.2.12.tgz#469b361b994e6204c3dcbf5e2281ba53d4212c6b"
+"@tendermint/ui@0.2.15":
+  version "0.2.15"
+  resolved "https://registry.yarnpkg.com/@tendermint/ui/-/ui-0.2.15.tgz#e2221399e0082a069f341e5fbfa68a7b5b1928d3"
   dependencies:
     axios "^0.18.0"
     cookieconsent "^3.0.6"
@@ -739,9 +739,12 @@
     markdown-it "^8.4.1"
     markdown-it-anchor "^5.0.2"
     moment "^2.22.2"
+    nib "^1.1.2"
     numeral "^2.0.6"
     perfect-scrollbar "^1.4.0"
     vue "^2.5.16"
+    vue-router "^3.0.1"
+    vuex "^3.0.1"
 
 "@types/babel-types@*", "@types/babel-types@^7.0.0":
   version "7.0.2"
@@ -7270,6 +7273,10 @@ vuex-router-sync@4.2.0:
 vuex@2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-2.3.1.tgz#cde8e997c1f9957719bc7dea154f9aa691d981a6"
+
+vuex@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.0.1.tgz#e761352ebe0af537d4bb755a9b9dc4be3df7efd2"
 
 watchpack@^1.5.0:
   version "1.6.0"
