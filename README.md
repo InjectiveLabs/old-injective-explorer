@@ -3,6 +3,10 @@
 Blockchain explorer for Tendermint. Supports JSON transactions and UTF-8.
 Based on Cosmos Explorer.
 
+## TODO Update README file
+
+Current README file is describing Cosmos Explorer and needs to be updated. For example Tendermint Explorer doesn't support LCD.
+
 ## Backend Requirement
 
 The Explorer is stateless and relies on a high-throughput Cosmos full node to connect to. The Explorer requires both the Tendermint RPC and the Cosmos LCD REST endpoints to be available publicly through TLS-secured subdomains. The convention is `https://rpc.fullnode.com` and `https://lcd.fullnode.com`.
