@@ -1,6 +1,7 @@
-# Cosmos Explorer
+# Tendermint Explorer
 
-Graphical interface to explore validators, fullnodes, and blocks for Cosmos Hub testnets.
+Blockchain explorer for Tendermint. Supports JSON transactions and UTF-8.
+Based on Cosmos Explorer.
 
 ## Backend Requirement
 
