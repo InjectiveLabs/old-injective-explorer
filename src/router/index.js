@@ -6,6 +6,7 @@ Vue.use(Router)
 import Index from "../components/PageIndex"
 import Search from "../components/PageSearch"
 import Block from "../components/PageBlock"
+import Tx from "../components/PageTx"
 import FullNodes from "../components/PageFullNodes"
 import FullNode from "../components/PageFullNode"
 import PageValidators from "../components/PageValidators"
@@ -17,6 +18,7 @@ const routes = [
   { path: "/", component: Index },
   { path: "/search", component: Search },
   { path: "/blocks/:block", name: "block", component: Block },
+  { path: "/tx/:hash", name: "tx", component: Tx },
   { path: "/nodes", component: FullNodes },
   {
     name: "node",
@@ -53,16 +55,12 @@ const routes = [
 export default new Router({
   mode: "history",
   routes: routes,
-  scrollBehavior(to, from, savedPosition) {
-    if (to.hash) {
+  scrollBehavior(to, from) {
+    if (to.hash && to.hash.length > 0) {
       return {
         selector: to.hash
       }
     }
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
-    }
+    return { x: 0, y: 0 }
   }
 })

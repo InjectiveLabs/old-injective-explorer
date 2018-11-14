@@ -6,7 +6,7 @@ nav#app-header: .container
     .header-item(v-else @click="enableMenu('app')"): i.material-icons menu
 
   router-link.header-item.header-item-logo(to="/")
-    img(src="../assets/images/cosmos-wordmark-white.svg")
+    h3.LogoType Tendermint Explorer
 
   app-menu(v-if="config.activeMenu === 'app' || config.desktop")
 
@@ -61,6 +61,10 @@ export default {
 <style lang="stylus">
 // @require '../styles/variables.styl'
 @import '~variables'
+
+.LogoType
+  font-size 23px
+  font-weight bold
 
 @media screen and (max-width: 1023px)
   #app-header
@@ -122,7 +126,7 @@ sidebar-width = 16rem
       display: flex;
       flex-flow: column nowrap;
     .header-item-logo
-      padding: 1.25rem 1rem 1rem 1rem;
+      padding: 1.25rem 1rem;
       line-height: normal;
       border-bottom: 0.0625rem solid var(--bc);
       img
@@ -137,4 +141,14 @@ sidebar-width = 16rem
 
   #app-main
     flex 1
+
+  .tm-page-header
+    background-color #181f38
+
+  .tm-page-header-text
+    padding-top 0
+
+  .tm-tool-bar-container
+    a
+      margin-top 0
 </style>

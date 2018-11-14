@@ -25,11 +25,7 @@ tm-page(title='Testnet Explorer')
         tm-field.node-input(
           type="text"
           v-model="bc.rpc")
-    tm-list-item(dt='LCD Endpoint')
-      div(slot="dd")
-        tm-field.node-input(
-          type="text"
-          v-model="bc.lcd")
+
 </template>
 
 <script>

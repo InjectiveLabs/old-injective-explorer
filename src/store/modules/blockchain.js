@@ -2,8 +2,8 @@ import axios from "axios"
 import { RpcClient } from "tendermint"
 
 const state = {
-  rpc: "https://gaia-seeds.interblock.io",
-  lcd: "https://gaia-seeds.interblock.io:1317",
+  rpc: "http://localhost:26657",
+  //lcd: "https://gaia-seeds.interblock.io:1317",
   status: {
     listen_addr: "",
     sync_info: {
@@ -24,7 +24,7 @@ const state = {
   roundStep: ""
 }
 
-const client = RpcClient("wss://gaia-seeds.interblock.io:443")
+const client = RpcClient("ws://localhost:26657")
 
 const actions = {
   subNewBlock({ commit, dispatch }) {
@@ -76,9 +76,14 @@ const actions = {
     return Promise.resolve()
   },
   async getValidators({ state, commit, dispatch }) {
-    let json = await axios.get(`${state.lcd}/stake/validators`)
-    commit("setValidators", json.data)
+    let json = await axios.get(`${state.rpc}/validators`)
+    commit("setValidators", json.data.result.validators)
     dispatch("updateValidatorAvatars")
+    return Promise.resolve()
+  },
+  async getLastBlock({ state, commit }) {
+    let json = await axios.get(`${state.rpc}/block`)
+    commit("addBlock", json.data.result.block)
     return Promise.resolve()
   },
   async getConsensusState({ state, commit }) {
@@ -94,7 +99,7 @@ const actions = {
   },
   async updateValidatorAvatars({ state, commit }) {
     state.validators.map(async validator => {
-      if (validator.description.identity) {
+      if (validator.description && validator.description.identity) {
         let urlPrefix =
           "https://keybase.io/_/api/1.0/user/lookup.json?key_suffix="
         let fullUrl = urlPrefix + validator.description.identity

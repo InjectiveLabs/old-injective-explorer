@@ -1,7 +1,7 @@
 {
-  "name": "netmon-ui",
+  "name": "tendermint-explorer",
   "version": "1.0.0",
-  "description": "Network monitor and governance for Cosmos.",
+  "description": "Blockchain and transaction explorer for Tendermint.",
   "author": "Peng Zhong <peng@nylira.com>",
   "private": true,
   "scripts": {
