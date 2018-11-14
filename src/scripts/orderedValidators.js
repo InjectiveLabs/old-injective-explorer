@@ -1,23 +1,18 @@
-import { shuffle, orderBy } from "lodash"
+import { orderBy } from "lodash"
 export default function(validators) {
-  // let validatorsWithAvatars = []
-  // let validatorsWithoutAvatars = []
-  let orderedValidators = []
+  let orderedValidators = validators
   if (validators && validators.length > 1) {
     orderedValidators = orderBy(
       validators,
-      [i => i.description.moniker.toLowerCase()],
-      "asc"
+      [i => {
+        if (i.description && i.description.moniker) {
+          return i.description.moniker.toLowerCase()
+        } else {
+          return i.address
+        }
+      }],
+      ["asc"]
     )
-    /*
-    validatorsWithAvatars = orderedValidators.filter(
-      v => (v = v.description.identity)
-    )
-    validatorsWithoutAvatars = orderedValidators.filter(
-      v => (v = !v.description.identity)
-    )
-    orderedValidators = validatorsWithAvatars.concat(validatorsWithoutAvatars)
-    */
   }
-  return shuffle(orderedValidators)
+  return orderedValidators
 }

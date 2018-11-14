@@ -23,6 +23,7 @@ import axios from "axios"
 import { decodeTx } from "../scripts/tx"
 import PartTxData from './PartTxData'
 import { TmListItem, TmPage, TmPart, TmToolBar } from "@tendermint/ui"
+
 export default {
   name: "page-block",
   components: {

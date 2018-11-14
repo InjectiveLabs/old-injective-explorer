@@ -1,7 +1,8 @@
 <template lang="pug">
 menu.app-menu
   .app-menu-main
-    tm-list-item(to="/" exact @click.native="close" title="Blockchain")
+    tm-list-item(to="/" exact @click.native="close" title="Overview")
+    tm-list-item(to="/blocks" exact @click.native="close" :title="`Blocks (${totalBlocks})`")
     tm-list-item(to="/nodes" exact @click.native="close" :title="`Full Nodes (${nodes.length})`")
     //tm-list-item(to="/validators" @click.native="close" :title="`Validators (${votingValidators})`" v-bind:class="{ 'active': isValidatorPage }")
     //tm-list-item(to="/validators-revoked" @click.native="close" :title="`Revoked Validators (${revokedValidators})`")
@@ -20,7 +21,7 @@ export default {
     TmPart
   },
   computed: {
-    ...mapGetters(["proposals", "nodes", "validators"]),
+    ...mapGetters(["proposals", "nodes", "validators", "totalBlocks"]),
     proposalAlerts() {
       return this.proposals.filter(p => p.flags.read === false).length
     },

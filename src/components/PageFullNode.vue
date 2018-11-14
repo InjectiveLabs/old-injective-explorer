@@ -33,10 +33,11 @@ tm-page(:title="`Node: ${getIp(fullNode)}`")
 </template>
 
 <script>
-import moment from "moment"
 import { mapGetters } from "vuex"
+import { readableDate } from "../scripts/utils"
 import { TmListItem, TmPage, TmPart, TmToolBar } from "@tendermint/ui"
 import AnchorCopy from "./AnchorCopy"
+
 export default {
   name: "page-fullNode",
   components: {
@@ -83,9 +84,7 @@ export default {
         fullNode.node_info.listen_addr.split(":")[0]
       )
     },
-    readableDate(ms) {
-      return moment(ms).format("YYYY-MM-DD h:mm:ss A")
-    }
+    readableDate
   },
   mounted() {
     // setInterval(console.log(this.fullNode), 1000)

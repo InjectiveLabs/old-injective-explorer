@@ -1,11 +1,10 @@
 <template lang="pug">
-tm-page(:title="`Block ${block.header.height}`")
+tm-page(:title="`Block ${block.header.height}${hasNextBlock ? '' : ' (the latest block)'}`")
   div(slot="menu"): tm-tool-bar
-    // router-link(to="/"): i.material-icons arrow_back
-    router-link(:to="{ name: 'block', params: { block: prevHeight }}" v-if="prevHeight >= 0")
+    router-link(:to="{ name: 'block', params: { block: prevHeight }}" v-if="hasPrevBlock")
       i.material-icons chevron_left
       | Block {{ prevHeight }}
-    router-link(:to="{ name: 'block', params: { block: nextHeight }}")
+    router-link(:to="{ name: 'block', params: { block: nextHeight }}" v-if="hasNextBlock")
       | Block {{ nextHeight }}
       i.material-icons chevron_right
     a(:href="jsonUrl" target="_blank") JSON
@@ -64,13 +63,21 @@ export default {
     PartTxData
   },
   computed: {
-    ...mapGetters(["blockchain"]),
-
+    ...mapGetters([
+      "blockchain",
+      "totalBlocks"
+    ]),
     prevHeight() {
       return this.block.header.height - 1
     },
     nextHeight() {
       return this.block.header.height + 1
+    },
+    hasPrevBlock() {
+      return this.prevHeight > 0
+    },
+    hasNextBlock() {
+      return this.nextHeight <= this.totalBlocks
     },
     decodedTxs () {
       return this.block.data.txs.map((tx, i) => {

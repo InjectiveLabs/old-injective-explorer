@@ -6,18 +6,20 @@ tm-page(title='Testnet Explorer')
     tm-list-item(dt='Status' :dd='validatorsActive' :href="`${bc.rpc}/consensus_state`" target="_blank")
     tm-list-item(dt='Prevote State' :dd='prevotes')
     tm-list-item(dt='Precommit State' :dd='precommits')
+    tm-list-item(dt='Total Transactions' :dd='num.prettyInt(totalTxs)')
 
   tm-part(title='Current Block' v-if="latestBlock.height > 0")
     tm-list-item(dt='Block Height' :dd='num.prettyInt(latestBlock.height)'
       :to="{ name: 'block', params: { block: latestBlock.height }}")
     tm-list-item(dt='Block Time' :dd='readableDate(latestBlock.time)')
-    tm-list-item(dt='Last Block Hash' :dd='latestBlock.last_commit_hash')
+    tm-list-item(dt='Transactions' :dd='num.prettyInt(latestBlock.num_txs)')
+    tm-list-item(dt='Last Commit Hash' :dd='latestBlock.last_commit_hash')
 
   tm-part(title='Current Block' v-else)
     tm-list-item(dt='Block Height' :dd='num.prettyInt(latestBlock.height)'
       :to="{ name: 'block', params: { block: latestBlock.height }}")
     tm-list-item(dt='Block Time' dd='No blocks yet')
-    tm-list-item(dt='Last Block Hash' dd='N/A')
+    tm-list-item(dt='Last Commit Hash' dd='N/A')
 
   tm-part(title='Connected To')
     tm-list-item(dt='RPC Endpoint')
@@ -29,10 +31,10 @@ tm-page(title='Testnet Explorer')
 </template>
 
 <script>
-import moment from "moment"
 import num from "../scripts/num"
 import { mapGetters } from "vuex"
-import votingValidators from "scripts/votingValidators"
+import { readableDate } from "../scripts/utils"
+import votingValidators from "../scripts/votingValidators"
 import { TmListItem, TmPage, TmPart, TmField } from "@tendermint/ui"
 
 export default {
@@ -50,19 +52,10 @@ export default {
       "nodes",
       "validators",
       "consensusState",
-      "blocks"
+      "blocks",
+      "latestBlock",
+      "totalTxs",
     ]),
-    latestBlock() {
-      if (this.blocks && this.blocks.length >= 1) {
-        return this.blocks[0].header
-      } else {
-        return {
-          height: 0,
-          time: "",
-          commit_hash: ""
-        }
-      }
-    },
     validatorsActive() {
       if (this.validators && this.validators.length > 0) {
         return this.validatorCount
@@ -113,13 +106,10 @@ export default {
     }
   },
   data: () => ({
-    moment: moment,
     num: num
   }),
   methods: {
-    readableDate(ms) {
-      return moment(ms).format("YYYY-MM-DD h:mm:ss A")
-    },
+    readableDate,
     toggleBlockchainSelect() {
       this.$store.commit(
         "SET_CONFIG_BLOCKCHAIN_SELECT",
@@ -139,4 +129,4 @@ export default {
   padding 0 0.5rem
   background transparent
   df()
-</style
+</style>
