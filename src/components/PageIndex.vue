@@ -1,5 +1,5 @@
 <template lang="pug">
-tm-page(title='Testnet Explorer')
+tm-page(title=process.env.VUE_APP_NETWORK)
   tm-part(title='Testnet Data')
     tm-list-item(dt='Testnet Version' :dd='bc.status.node_info.network')
     // tm-list-item(dt='Tendermint Version' :dd='bc.status.node_info.version')

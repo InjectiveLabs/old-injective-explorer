@@ -1,28 +1,28 @@
-# Tendermint Explorer
+# Heimdall Explorer
 
 Blockchain and transaction explorer for Tendermint. Supports JSON transactions and UTF-8.
 Based on Cosmos Explorer.
 
 ## What is different from Cosmos Explorer?
 
-Tendermint Explorer relies only on REST RPC (no LCD).
+Heimdall Explorer relies only on REST RPC (no LCD).
 
 Also it has few extra features comparing to Cosmos Explorer.
 
 ### List of blocks
 
-![List of blocks in Tendermint Explorer](https://res.cloudinary.com/thedapper/image/upload/v1542225119/Screen_Shot_2018-11-14_at_9.51.18_PM.png)
+![List of blocks in Heimdall Explorer](https://res.cloudinary.com/thedapper/image/upload/v1542225119/Screen_Shot_2018-11-14_at_9.51.18_PM.png)
 
 ### Transaction details
 
-If a block has transactions that are JSON objects, Tendermint Explorer will render all tx's fields automatically. 
+If a block has transactions that are JSON objects, Heimdall Explorer will render all tx's fields automatically. 
 Explorer handles UTF-8 encoded values in a [proper way](https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding).
 
-![Block Details in Tendermint Explorer](https://res.cloudinary.com/thedapper/image/upload/v1542224916/Screen_Shot_2018-11-14_at_9.47.47_PM.png)
+![Block Details in Heimdall Explorer](https://res.cloudinary.com/thedapper/image/upload/v1542224916/Screen_Shot_2018-11-14_at_9.47.47_PM.png)
 
 ## Requirements
 
-Tendermint Explorer is stateless and relies on a high-throughput Tendermint full node to connect to. 
+Heimdall Explorer is stateless and relies on a high-throughput Tendermint full node to connect to. 
 Explorer requires Tendermint RPC endpoints to be available publicly through TLS-secured subdomains. 
 The convention is `https://rpc.fullnode.com`.
 
@@ -42,6 +42,14 @@ const client = RpcClient("ws://localhost:26657")
 **WARNING:** Every user that visits the Explorer opens two websockets to the default full node. 
 The user will continue to spam your full node with AJAX requests until they close the page. 
 We need a better backend solution for the Explorer! Please help if you can.
+## Set Env Variables
+Set Correct RPC URL and Network Name in the .env file
+
+```
+ VUE_APP_RPC_URL=http://127.0.0.1:26657
+ VUE_APP_RPC_WS_URL=ws://127.0.0.1:26657
+ VUE_APP_NETWORK=Testnet
+```
 
 ## Build
 

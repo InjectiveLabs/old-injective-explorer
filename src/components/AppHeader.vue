@@ -6,7 +6,7 @@ nav#app-header: .container
     .header-item(v-else @click="enableMenu('app')"): i.material-icons menu
 
   router-link.header-item.header-item-logo(to="/")
-    h3.LogoType Tendermint Explorer
+    h3.LogoType Heimdall Explorer
 
   app-menu(v-if="config.activeMenu === 'app' || config.desktop")
 
