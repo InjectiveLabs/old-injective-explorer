@@ -1,28 +1,28 @@
-# Heimdall Explorer
+# Injective Explorer
 
 Blockchain and transaction explorer for Tendermint. Supports JSON transactions and UTF-8.
 Based on Cosmos Explorer.
 
 ## What is different from Cosmos Explorer?
 
-Heimdall Explorer relies only on REST RPC (no LCD).
+Injective Explorer relies only on REST RPC (no LCD).
 
 Also it has few extra features comparing to Cosmos Explorer.
 
 ### List of blocks
 
-![List of blocks in Heimdall Explorer](https://res.cloudinary.com/thedapper/image/upload/v1542225119/Screen_Shot_2018-11-14_at_9.51.18_PM.png)
+![List of blocks in Injective Explorer](https://res.cloudinary.com/thedapper/image/upload/v1542225119/Screen_Shot_2018-11-14_at_9.51.18_PM.png)
 
 ### Transaction details
 
-If a block has transactions that are JSON objects, Heimdall Explorer will render all tx's fields automatically. 
+If a block has transactions that are JSON objects, Injective Explorer will render all tx's fields automatically. 
 Explorer handles UTF-8 encoded values in a [proper way](https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding).
 
-![Block Details in Heimdall Explorer](https://res.cloudinary.com/thedapper/image/upload/v1542224916/Screen_Shot_2018-11-14_at_9.47.47_PM.png)
+![Block Details in Injective Explorer](https://res.cloudinary.com/thedapper/image/upload/v1542224916/Screen_Shot_2018-11-14_at_9.47.47_PM.png)
 
 ## Requirements
 
-Heimdall Explorer is stateless and relies on a high-throughput Tendermint full node to connect to. 
+Injective Explorer is stateless and relies on a high-throughput Tendermint full node to connect to. 
 Explorer requires Tendermint RPC endpoints to be available publicly through TLS-secured subdomains. 
 The convention is `https://rpc.fullnode.com`.
 
