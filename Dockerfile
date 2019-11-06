@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:latest as build
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -14,5 +14,7 @@ COPY . /usr/src/app
 
 RUN yarn build
 
-EXPOSE 8080
-CMD [ "yarn", "start" ]
+FROM nginx:1.16.0-alpine
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

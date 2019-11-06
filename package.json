@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open",
-    "build": "vue-cli-service build",
+    "build": "NODE_ENV=production vue-cli-service build",
+    "release": "docker build -t gcr.io/injective-core/explorer . && docker push gcr.io/injective-core/explorer",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
