@@ -16,58 +16,61 @@ const state = {
       moniker: "injective"
     }
   },
-  nodes: [{
-    "node_info": {
-      "protocol_version": {
-        "p2p": "7",
-        "block": "10",
-        "app": "0"
-      },
-      "id": "b2298a0f940a9f869ab8ba72077422586699132f",
-      "listen_addr": "tcp://0.0.0.0:26656",
-      "network": "testnet",
-      "version": "0.32.3",
-      "channels": "4020212223303800",
-      "moniker": "injective",
-      "other": {
-        "tx_index": "on",
-        "rpc_address": "tcp://127.0.0.1:26657"
-      }
-    },
-    "sync_info": {
-      "latest_block_hash": "700FE0856586C8A7249FFCD065840A4253A7C19B1B9F05DD35DAA75CAFE34CD9",
-      "latest_app_hash": "30E886C73D6984177D524317F0CE668F0C32F15C0B5EC2B188E3E2E6D4E8690E",
-      "latest_block_height": "24689",
-      "latest_block_time": "2019-10-25T01:50:12.389533Z",
-      "catching_up": false
-    },
-    "validator_info": {
-      "address": "D2A7726E05E13ED5289F869450EE7DD0BAA700CC",
-      "pub_key": {
-        "type": "tendermint/PubKeyEd25519",
-        "value": "sk/BjG9hxq1YxSqb218N5Pk2AcApduu5+g92F7qsqnE="
-      },
-      "voting_power": "1000"
-    }
-  }],
-  validators: [{
-    "jsonrpc": "2.0",
-    "id": "",
-    "result": {
-      "block_height": "24774",
-      "validators": [
-        {
-          "address": "D2A7726E05E13ED5289F869450EE7DD0BAA700CC",
-          "pub_key": {
-            "type": "tendermint/PubKeyEd25519",
-            "value": "sk/BjG9hxq1YxSqb218N5Pk2AcApduu5+g92F7qsqnE="
-          },
-          "voting_power": "1000",
-          "proposer_priority": "0"
-        }
-      ]
-    }
-  }],
+  nodes: [],
+  // [{
+  //   "node_info": {
+  //     "protocol_version": {
+  //       "p2p": "7",
+  //       "block": "10",
+  //       "app": "0"
+  //     },
+  //     "id": "b2298a0f940a9f869ab8ba72077422586699132f",
+  //     "listen_addr": "tcp://0.0.0.0:26656",
+  //     "network": "testnet",
+  //     "version": "0.32.3",
+  //     "channels": "4020212223303800",
+  //     "moniker": "injective",
+  //     "other": {
+  //       "tx_index": "on",
+  //       "rpc_address": "tcp://127.0.0.1:26657"
+  //     }
+  //   },
+  //   "sync_info": {
+  //     "latest_block_hash": "700FE0856586C8A7249FFCD065840A4253A7C19B1B9F05DD35DAA75CAFE34CD9",
+  //     "latest_app_hash": "30E886C73D6984177D524317F0CE668F0C32F15C0B5EC2B188E3E2E6D4E8690E",
+  //     "latest_block_height": "24689",
+  //     "latest_block_time": "2019-10-25T01:50:12.389533Z",
+  //     "catching_up": false
+  //   },
+  //   "validator_info": {
+  //     "address": "D2A7726E05E13ED5289F869450EE7DD0BAA700CC",
+  //     "pub_key": {
+  //       "type": "tendermint/PubKeyEd25519",
+  //       "value": "sk/BjG9hxq1YxSqb218N5Pk2AcApduu5+g92F7qsqnE="
+  //     },
+  //     "voting_power": "1000"
+  //   }
+  // }]
+  validators: [],
+  //
+  // [{
+  //   "jsonrpc": "2.0",
+  //   "id": "",
+  //   "result": {
+  //     "block_height": "24774",
+  //     "validators": [
+  //       {
+  //         "address": "D2A7726E05E13ED5289F869450EE7DD0BAA700CC",
+  //         "pub_key": {
+  //           "type": "tendermint/PubKeyEd25519",
+  //           "value": "sk/BjG9hxq1YxSqb218N5Pk2AcApduu5+g92F7qsqnE="
+  //         },
+  //         "voting_power": "1000",
+  //         "proposer_priority": "0"
+  //       }
+  //     ]
+  //   }
+  // }]
   consensusState: {},
   dumpConsensusState: {},
   blocks: [],
@@ -120,10 +123,10 @@ const actions = {
     return Promise.resolve()
   },
   async getNodes({ state, commit }) {
-    let json = await axios.get(`${state.rpc}/status`)
-    let nodes = [json.data.result]
-    // let json = await axios.get(`${state.rpc}/net_info`)
-    // let nodes = json.data.result.peers
+    // let json = await axios.get(`${state.rpc}/status`)
+    // let nodes = [json.data.result]
+    let json = await axios.get(`${state.rpc}/net_info`)
+    let nodes = json.data.result.peers
     commit("setNodes", nodes)
     return Promise.resolve()
   },
@@ -172,7 +175,7 @@ const actions = {
 
 const mutations = {
   setUrl(state, value) {
-    state.rpc = "http://127.0.0.1/26657"
+    state.rpc = value //"http://127.0.0.1/26657"
   },
   setStatus(state, value) {
     state.status = value
